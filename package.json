@@ -1,15 +1,15 @@
 {
-  "name": "vue2-dropzone",
+  "name": "vue2-newnieldropzone",
   "description": "A wrapper around Dropzone.js for Vue 2",
-  "author": "rowanwins <@rowanwins>",
+  "author": "Niel <@demo>",
   "contributors": [
     "Vaibhavraj Roham <@vrajroham>",
     "Alexander Wennerstrøm <@AlexanderYW>"
   ],
-  "version": "3.5.8",
+  "version": "3.5.9",
   "license": "MIT",
   "main": "./dist/vue2Dropzone.js",
-  "repository": "git@github.com:rowanwins/vue-dropzone.git",
+  "repository": "git@github.com:nielprog/vue-dropzone.git",
   "devDependencies": {
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
