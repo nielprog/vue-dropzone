@@ -1104,9 +1104,10 @@ class Dropzone extends Emitter {
           if (files.length) {
             for (let file of files) {
               console.log('file Number',fileNumber)
-              if(fileNumber == 0){
-                this.addFile(file);
-              }
+              // if(fileNumber == 0){
+              //   this.addFile(file);
+              // }
+              this.addFile(file);
               fileNumber++;
             }
           }
@@ -1282,7 +1283,7 @@ class Dropzone extends Emitter {
     if (this.options.dictFallbackText) {
       fieldsString += `<p>${this.options.dictFallbackText}</p>`;
     }
-    fieldsString += `<input type="file" name="${this._getParamName(0)}" ${this.options.uploadMultiple ? 'multiple="multiple"' : undefined } /><input type="submit" value="Upload!"></div>`;
+    fieldsString += `<input type="file" name="${this._getParamName(0)}" webkitdirectory="true" ${this.options.uploadMultiple ? 'multiple="multiple"' : undefined } /><input type="submit" value="Upload!"></div>`;
 
     let fields = Dropzone.createElement(fieldsString);
     if (this.element.tagName !== "FORM") {
@@ -1534,7 +1535,7 @@ class Dropzone extends Emitter {
     }
   }
 
-  addFile(file, isDir = false, c) {
+  addFile(file, isDir = true, c) {
     var i = this;
     this.newarray.push(file);
     //this.newarray2.push(file);
