@@ -4,10 +4,7 @@
     ref="dropzoneElement"
     :class="{ 'vue-dropzone dropzone': includeStyling }"
   >
-    <div
-      v-if="useCustomSlot"
-      class="dz-message"
-    >
+    <div v-if="useCustomSlot" class="dz-message">
       <slot>Drop files here to upload</slot>
     </div>
   </div>
@@ -26,7 +23,6 @@ class Emitter {
     return this;
   }
 
-
   emit(event, ...args) {
     this._callbacks = this._callbacks || {};
     let callbacks = this._callbacks[event];
@@ -44,7 +40,7 @@ class Emitter {
   // listeners for that event will be removed. If neither is provided, all
   // event listeners will be removed.
   off(event, fn) {
-    if (!this._callbacks || (arguments.length === 0)) {
+    if (!this._callbacks || arguments.length === 0) {
       this._callbacks = {};
       return this;
     }
@@ -75,8 +71,7 @@ class Emitter {
 }
 
 class Dropzone extends Emitter {
-    static initClass() {
-
+  static initClass() {
     // Exposing the emitter class, mainly for tests
     this.prototype.Emitter = Emitter;
 
@@ -116,9 +111,8 @@ class Dropzone extends Emitter {
       "reset",
       "maxfilesexceeded",
       "maxfilesreached",
-      "queuecomplete"
+      "queuecomplete",
     ];
-
 
     this.prototype.defaultOptions = {
       /**
@@ -139,7 +133,7 @@ class Dropzone extends Emitter {
        * Will be set on the XHRequest.
        */
       withCredentials: false,
-      fileCounter:1,
+      fileCounter: 1,
 
       /**
        * The timeout for the XHR requests in milliseconds (since `v4.4.0`).
@@ -234,7 +228,7 @@ class Dropzone extends Emitter {
        * How the images should be scaled down in case both, `thumbnailWidth` and `thumbnailHeight` are provided.
        * Can be either `contain` or `crop`.
        */
-      thumbnailMethod: 'crop',
+      thumbnailMethod: "crop",
 
       /**
        * If set, images will be resized to these dimensions before being **uploaded**.
@@ -267,7 +261,7 @@ class Dropzone extends Emitter {
        * How the images should be scaled down in case both, `resizeWidth` and `resizeHeight` are provided.
        * Can be either `contain` or `crop`.
        */
-      resizeMethod: 'contain',
+      resizeMethod: "contain",
 
       /**
        * The base that is used to calculate the filesize. You can change this to
@@ -302,7 +296,6 @@ class Dropzone extends Emitter {
        * Whether hidden files in directories should be ignored.
        */
       ignoreHiddenFiles: true,
-
 
       /**
        * The default implementation of `accept` checks the file's mime type or
@@ -403,20 +396,23 @@ class Dropzone extends Emitter {
       /**
        * The text that replaces the default message text it the browser is not supported.
        */
-      dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
+      dictFallbackMessage:
+        "Your browser does not support drag'n'drop file uploads.",
 
       /**
        * The text that will be added before the fallback form.
        * If you provide a  fallback element yourself, or if this option is `null` this will
        * be ignored.
        */
-      dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
+      dictFallbackText:
+        "Please use the fallback form below to upload your files like in the olden days.",
 
       /**
        * If the filesize is too big.
        * `{{filesize}}` and `{{maxFilesize}}` will be replaced with the respective configuration values.
        */
-      dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
+      dictFileTooBig:
+        "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
 
       /**
        * If the file doesn't match the file type.
@@ -442,7 +438,8 @@ class Dropzone extends Emitter {
       /**
        * If `addRemoveLinks` is true, the text to be used for confirmation when cancelling upload.
        */
-      dictCancelUploadConfirmation: "Are you sure you want to cancel this upload?",
+      dictCancelUploadConfirmation:
+        "Are you sure you want to cancel this upload?",
 
       /**
        * If `addRemoveLinks` is true, the text to be used to remove a file.
@@ -464,7 +461,7 @@ class Dropzone extends Emitter {
        * Allows you to translate the different units. Starting with `tb` for terabytes and going down to
        * `b` for bytes.
        */
-      dictFileSizeUnits: {tb: "TB", gb: "GB", mb: "MB", kb: "KB", b: "b"},
+      dictFileSizeUnits: { tb: "TB", gb: "GB", mb: "MB", kb: "KB", b: "b" },
       /**
        * Called when dropzone initialized
        * You can add event listeners here
@@ -489,7 +486,7 @@ class Dropzone extends Emitter {
             dztotalfilesize: chunk.file.size,
             dzchunksize: this.options.chunkSize,
             dztotalchunkcount: chunk.file.upload.totalChunkCount,
-            dzchunkbyteoffset: chunk.index * this.options.chunkSize
+            dzchunkbyteoffset: chunk.index * this.options.chunkSize,
           };
         }
       },
@@ -513,7 +510,9 @@ class Dropzone extends Emitter {
        * and the `done` function as second. `done()` needs to be invoked when everything
        * needed to finish the upload process is done.
        */
-      chunksUploaded: function(file, done) { done(); },
+      chunksUploaded: function (file, done) {
+        done();
+      },
 
       /**
        * Gets called when the browser is not supported.
@@ -533,7 +532,9 @@ class Dropzone extends Emitter {
           }
         }
         if (!messageElement) {
-          messageElement = Dropzone.createElement("<div class=\"dz-message\"><span></span></div>");
+          messageElement = Dropzone.createElement(
+            '<div class="dz-message"><span></span></div>'
+          );
           this.element.appendChild(messageElement);
         }
 
@@ -548,7 +549,6 @@ class Dropzone extends Emitter {
 
         return this.element.appendChild(this.getFallbackForm());
       },
-
 
       /**
        * Gets called to calculate the thumbnail dimensions.
@@ -567,18 +567,18 @@ class Dropzone extends Emitter {
           srcX: 0,
           srcY: 0,
           srcWidth: file.width,
-          srcHeight: file.height
+          srcHeight: file.height,
         };
 
         let srcRatio = file.width / file.height;
 
         // Automatically calculate dimensions if not specified
-        if ((width == null) && (height == null)) {
+        if (width == null && height == null) {
           width = info.srcWidth;
           height = info.srcHeight;
-        } else if ((width == null)) {
+        } else if (width == null) {
           width = height * srcRatio;
-        } else if ((height == null)) {
+        } else if (height == null) {
           height = width / srcRatio;
         }
 
@@ -588,9 +588,9 @@ class Dropzone extends Emitter {
 
         let trgRatio = width / height;
 
-        if ((info.srcWidth > width) || (info.srcHeight > height)) {
+        if (info.srcWidth > width || info.srcHeight > height) {
           // Image is bigger and needs rescaling
-          if (resizeMethod === 'crop') {
+          if (resizeMethod === "crop") {
             if (srcRatio > trgRatio) {
               info.srcHeight = file.height;
               info.srcWidth = info.srcHeight * trgRatio;
@@ -598,7 +598,7 @@ class Dropzone extends Emitter {
               info.srcWidth = file.width;
               info.srcHeight = info.srcWidth / trgRatio;
             }
-          } else if (resizeMethod === 'contain') {
+          } else if (resizeMethod === "contain") {
             // Method 'contain'
             if (srcRatio > trgRatio) {
               height = width / srcRatio;
@@ -629,13 +629,21 @@ class Dropzone extends Emitter {
        * to be invoked with the file when the transformation is done.
        */
       transformFile(file, done) {
-        if ((this.options.resizeWidth || this.options.resizeHeight) && file.type.match(/image.*/)) {
-          return this.resizeImage(file, this.options.resizeWidth, this.options.resizeHeight, this.options.resizeMethod, done);
+        if (
+          (this.options.resizeWidth || this.options.resizeHeight) &&
+          file.type.match(/image.*/)
+        ) {
+          return this.resizeImage(
+            file,
+            this.options.resizeWidth,
+            this.options.resizeHeight,
+            this.options.resizeMethod,
+            done
+          );
         } else {
           return done(file);
         }
       },
-
 
       /**
        * A string that contains the template used for each dropped
@@ -656,7 +664,6 @@ class Dropzone extends Emitter {
       // END OPTIONS
       // (Required by the dropzone documentation parser)
 
-
       /*
        Those functions register themselves to the events on init and handle all
        the user interface specific stuff. Overwriting them won't break the upload
@@ -666,15 +673,11 @@ class Dropzone extends Emitter {
        and don't overwrite those options.
        */
 
-
-
-
       // Those are self explanatory and simply concern the DragnDrop.
       drop(e) {
         return this.element.classList.remove("dz-drag-hover");
       },
-      dragstart(e) {
-      },
+      dragstart(e) {},
       dragend(e) {
         return this.element.classList.remove("dz-drag-hover");
       },
@@ -688,8 +691,7 @@ class Dropzone extends Emitter {
         return this.element.classList.remove("dz-drag-hover");
       },
 
-      paste(e) {
-      },
+      paste(e) {},
 
       // Called whenever there are no files left in the dropzone anymore, and the
       // dropzone should be displayed as if in the initial state.
@@ -700,84 +702,117 @@ class Dropzone extends Emitter {
       // Called when a file is added to the queue
       // Receives `file`
       addedfile(file, isDir, c) {
-        //console.log('counter',this.fileCounter)
         var i = this;
         this.dirCounter++;
-        console.log('previewElement::', isDir)
-        console.log('this.dirCounter::', this.dirCounter)
-        console.log('c::', c)
-        if(isDir && this.dirCounter === c) {
-          console.log('directory IN');
-        	this.dirCounter = 0  
-          if (this.element === this.previewsContainer && this.element.classList.add("dz-started"), this.previewsContainer) {
-            file.previewElement = Dropzone.createElement(this.options.previewTemplate.trim());
+        if (isDir && this.dirCounter === c) {
+          this.dirCounter = 0;
+          if (
+            (this.element === this.previewsContainer &&
+              this.element.classList.add("dz-started"),
+            this.previewsContainer)
+          ) {
+            file.previewElement = Dropzone.createElement(
+              this.options.previewTemplate.trim()
+            );
             file.previewTemplate = file.previewElement; // Backwards compatibility
             this.previewsContainer.appendChild(file.previewElement);
-            for (var node of file.previewElement.querySelectorAll("[data-dz-name]")) {
+            for (var node of file.previewElement.querySelectorAll(
+              "[data-dz-name]"
+            )) {
               node.textContent = file.name;
             }
-            for (node of file.previewElement.querySelectorAll("[data-dz-size]")) {
+            for (node of file.previewElement.querySelectorAll(
+              "[data-dz-size]"
+            )) {
               node.innerHTML = this.filesize(file.size);
             }
 
             if (this.options.addRemoveLinks) {
-              file._removeLink = Dropzone.createElement(`<a class="dz-remove" href="javascript:undefined;" data-dz-remove>${this.options.dictRemoveFile}</a>`);
+              file._removeLink = Dropzone.createElement(
+                `<a class="dz-remove" href="javascript:undefined;" data-dz-remove>${this.options.dictRemoveFile}</a>`
+              );
               file.previewElement.appendChild(file._removeLink);
             }
 
-            let removeFileEvent = e => {
+            let removeFileEvent = (e) => {
               e.preventDefault();
               e.stopPropagation();
               if (file.status === Dropzone.UPLOADING) {
-                return Dropzone.confirm(this.options.dictCancelUploadConfirmation, () => this.removeFile(file));
+                return Dropzone.confirm(
+                  this.options.dictCancelUploadConfirmation,
+                  () => this.removeFile(file)
+                );
               } else {
                 if (this.options.dictRemoveFileConfirmation) {
-                  return Dropzone.confirm(this.options.dictRemoveFileConfirmation, () => this.removeFile(file));
+                  return Dropzone.confirm(
+                    this.options.dictRemoveFileConfirmation,
+                    () => this.removeFile(file)
+                  );
                 } else {
                   return this.removeFile(file);
                 }
               }
             };
 
-            for (let removeLink of file.previewElement.querySelectorAll("[data-dz-remove]")) {
+            for (let removeLink of file.previewElement.querySelectorAll(
+              "[data-dz-remove]"
+            )) {
               removeLink.addEventListener("click", removeFileEvent);
             }
           }
-        }else{
-          if(!isDir)
-          {
-            console.log('directory out');
-            if (this.element === this.previewsContainer && this.element.classList.add("dz-started"), this.previewsContainer) {
-              file.previewElement = Dropzone.createElement(this.options.previewTemplate.trim());
+        } else {
+          if (!isDir) {
+            if (
+              (this.element === this.previewsContainer &&
+                this.element.classList.add("dz-started"),
+              this.previewsContainer)
+            ) {
+              file.previewElement = Dropzone.createElement(
+                this.options.previewTemplate.trim()
+              );
               file.previewTemplate = file.previewElement; // Backwards compatibility
               this.previewsContainer.appendChild(file.previewElement);
-              for (var node of file.previewElement.querySelectorAll("[data-dz-name]")) {
+              for (var node of file.previewElement.querySelectorAll(
+                "[data-dz-name]"
+              )) {
                 node.textContent = file.name;
               }
-              for (node of file.previewElement.querySelectorAll("[data-dz-size]")) {
+              for (node of file.previewElement.querySelectorAll(
+                "[data-dz-size]"
+              )) {
                 node.innerHTML = this.filesize(file.size);
               }
 
               if (this.options.addRemoveLinks) {
-                file._removeLink = Dropzone.createElement(`<a class="dz-remove" href="javascript:undefined;" data-dz-remove>${this.options.dictRemoveFile}</a>`);
+                file._removeLink = Dropzone.createElement(
+                  `<a class="dz-remove" href="javascript:undefined;" data-dz-remove>${this.options.dictRemoveFile}</a>`
+                );
                 file.previewElement.appendChild(file._removeLink);
               }
 
-              let removeFileEvent = e => {
+              let removeFileEvent = (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 if (file.status === Dropzone.UPLOADING) {
-                  return Dropzone.confirm(this.options.dictCancelUploadConfirmation, () => this.removeFile(file));
+                  return Dropzone.confirm(
+                    this.options.dictCancelUploadConfirmation,
+                    () => this.removeFile(file)
+                  );
                 } else {
                   if (this.options.dictRemoveFileConfirmation) {
-                    return Dropzone.confirm(this.options.dictRemoveFileConfirmation, () => this.removeFile(file));
+                    return Dropzone.confirm(
+                      this.options.dictRemoveFileConfirmation,
+                      () => this.removeFile(file)
+                    );
                   } else {
                     return this.removeFile(file);
                   }
                 }
               };
 
-              for (let removeLink of file.previewElement.querySelectorAll("[data-dz-remove]")) {
+              for (let removeLink of file.previewElement.querySelectorAll(
+                "[data-dz-remove]"
+              )) {
                 removeLink.addEventListener("click", removeFileEvent);
               }
             }
@@ -785,10 +820,12 @@ class Dropzone extends Emitter {
         }
       },
 
-
       // Called whenever a file is removed.
       removedfile(file) {
-        if (file.previewElement != null && file.previewElement.parentNode != null) {
+        if (
+          file.previewElement != null &&
+          file.previewElement.parentNode != null
+        ) {
           file.previewElement.parentNode.removeChild(file.previewElement);
         }
         return this._updateMaxFilesReachedClass();
@@ -799,12 +836,17 @@ class Dropzone extends Emitter {
       thumbnail(file, dataUrl) {
         if (file.previewElement) {
           file.previewElement.classList.remove("dz-file-preview");
-          for (let thumbnailElement of file.previewElement.querySelectorAll("[data-dz-thumbnail]")) {
+          for (let thumbnailElement of file.previewElement.querySelectorAll(
+            "[data-dz-thumbnail]"
+          )) {
             thumbnailElement.alt = file.name;
             thumbnailElement.src = dataUrl;
           }
 
-          return setTimeout((() => file.previewElement.classList.add("dz-image-preview")), 1);
+          return setTimeout(
+            () => file.previewElement.classList.add("dz-image-preview"),
+            1
+          );
         }
       },
 
@@ -813,17 +855,18 @@ class Dropzone extends Emitter {
       error(file, message) {
         if (file.previewElement) {
           file.previewElement.classList.add("dz-error");
-          if ((typeof message !== "String") && message.error) {
+          if (typeof message !== "String" && message.error) {
             message = message.error;
           }
-          for (let node of file.previewElement.querySelectorAll("[data-dz-errormessage]")) {
+          for (let node of file.previewElement.querySelectorAll(
+            "[data-dz-errormessage]"
+          )) {
             node.textContent = message;
           }
         }
       },
 
-      errormultiple() {
-      },
+      errormultiple() {},
 
       // Called when a file gets processed. Since there is a cue, not all added
       // files are processed immediately.
@@ -832,38 +875,36 @@ class Dropzone extends Emitter {
         if (file.previewElement) {
           file.previewElement.classList.add("dz-processing");
           if (file._removeLink) {
-            return file._removeLink.innerHTML = this.options.dictCancelUpload;
+            return (file._removeLink.innerHTML = this.options.dictCancelUpload);
           }
         }
       },
 
-      processingmultiple() {
-      },
+      processingmultiple() {},
 
       // Called whenever the upload progress gets updated.
       // Receives `file`, `progress` (percentage 0-100) and `bytesSent`.
       // To get the total number of bytes of the file, use `file.size`
       uploadprogress(file, progress, bytesSent) {
         if (file.previewElement) {
-          for (let node of file.previewElement.querySelectorAll("[data-dz-uploadprogress]")) {
-              node.nodeName === 'PROGRESS' ?
-                  (node.value = progress)
-                  :
-                  (node.style.width = `${progress}%`)
+          for (let node of file.previewElement.querySelectorAll(
+            "[data-dz-uploadprogress]"
+          )) {
+            node.nodeName === "PROGRESS"
+              ? (node.value = progress)
+              : (node.style.width = `${progress}%`);
           }
         }
       },
 
       // Called whenever the total upload progress gets updated.
       // Called with totalUploadProgress (0-100), totalBytes and totalBytesSent
-      totaluploadprogress() {
-      },
+      totaluploadprogress() {},
 
       // Called just before the file is sent. Gets the `xhr` object as second
       // parameter, so you can modify it (for example to add a CSRF token) and a
       // `formData` object to add additional information.
-      sending() {
-      },
+      sending() {},
 
       sendingmultiple() {},
 
@@ -906,9 +947,8 @@ class Dropzone extends Emitter {
         this.newarray = [];
       },
 
-      addedfiles() {}
+      addedfiles() {},
     };
-
 
     this.prototype._thumbnailQueue = [];
     this.prototype._processingThumbnail = false;
@@ -934,7 +974,10 @@ class Dropzone extends Emitter {
     // For backwards compatibility since the version was in the prototype previously
     this.version = Dropzone.version;
 
-    this.defaultOptions.previewTemplate = this.defaultOptions.previewTemplate.replace(/\n*/g, "");
+    this.defaultOptions.previewTemplate = this.defaultOptions.previewTemplate.replace(
+      /\n*/g,
+      ""
+    );
 
     this.clickableElements = [];
     this.listeners = [];
@@ -945,7 +988,7 @@ class Dropzone extends Emitter {
     }
 
     // Not checking if instance of HTMLElement or Element since IE9 is extremely weird.
-    if (!this.element || (this.element.nodeType == null)) {
+    if (!this.element || this.element.nodeType == null) {
       throw new Error("Invalid dropzone element.");
     }
 
@@ -959,9 +1002,15 @@ class Dropzone extends Emitter {
     // Put the dropzone inside the element itself.
     this.element.dropzone = this;
 
-    let elementOptions = (left = Dropzone.optionsForElement(this.element)) != null ? left : {};
+    let elementOptions =
+      (left = Dropzone.optionsForElement(this.element)) != null ? left : {};
 
-    this.options = Dropzone.extend({}, this.defaultOptions, elementOptions, options != null ? options : {});
+    this.options = Dropzone.extend(
+      {},
+      this.defaultOptions,
+      elementOptions,
+      options != null ? options : {}
+    );
 
     // If the browser failed, just call the fallback and leave
     if (this.options.forceFallback || !Dropzone.isBrowserSupported()) {
@@ -978,11 +1027,13 @@ class Dropzone extends Emitter {
     }
 
     if (this.options.acceptedFiles && this.options.acceptedMimeTypes) {
-      throw new Error("You can't provide both 'acceptedFiles' and 'acceptedMimeTypes'. 'acceptedMimeTypes' is deprecated.");
+      throw new Error(
+        "You can't provide both 'acceptedFiles' and 'acceptedMimeTypes'. 'acceptedMimeTypes' is deprecated."
+      );
     }
 
     if (this.options.uploadMultiple && this.options.chunking) {
-      throw new Error('You cannot set both: uploadMultiple and chunking.');
+      throw new Error("You cannot set both: uploadMultiple and chunking.");
     }
 
     // Backwards compatibility
@@ -993,7 +1044,8 @@ class Dropzone extends Emitter {
 
     // Backwards compatibility
     if (this.options.renameFilename != null) {
-      this.options.renameFile = file => this.options.renameFilename.call(this, file.name, file);
+      this.options.renameFile = (file) =>
+        this.options.renameFilename.call(this, file.name, file);
     }
 
     this.options.method = this.options.method.toUpperCase();
@@ -1006,7 +1058,10 @@ class Dropzone extends Emitter {
     // Display previews in the previewsContainer element or the Dropzone element unless explicitly set to false
     if (this.options.previewsContainer !== false) {
       if (this.options.previewsContainer) {
-        this.previewsContainer = Dropzone.getElement(this.options.previewsContainer, "previewsContainer");
+        this.previewsContainer = Dropzone.getElement(
+          this.options.previewsContainer,
+          "previewsContainer"
+        );
       } else {
         this.previewsContainer = this.element;
       }
@@ -1016,14 +1071,15 @@ class Dropzone extends Emitter {
       if (this.options.clickable === true) {
         this.clickableElements = [this.element];
       } else {
-        this.clickableElements = Dropzone.getElements(this.options.clickable, "clickable");
+        this.clickableElements = Dropzone.getElements(
+          this.options.clickable,
+          "clickable"
+        );
       }
     }
 
-
     this.init();
   }
-
 
   // Returns all files that have been accepted
   getAcceptedFiles() {
@@ -1037,7 +1093,9 @@ class Dropzone extends Emitter {
   }
 
   getFilesWithStatus(status) {
-    return this.files.filter((file) => file.status === status).map((file) => file);
+    return this.files
+      .filter((file) => file.status === status)
+      .map((file) => file);
   }
 
   // Returns all files that are in the queue
@@ -1055,7 +1113,12 @@ class Dropzone extends Emitter {
 
   // Files that are either queued or uploading
   getActiveFiles() {
-    return this.files.filter((file) => (file.status === Dropzone.UPLOADING) || (file.status === Dropzone.QUEUED)).map((file) => file);
+    return this.files
+      .filter(
+        (file) =>
+          file.status === Dropzone.UPLOADING || file.status === Dropzone.QUEUED
+      )
+      .map((file) => file);
   }
 
   // The function that gets called when Dropzone is initialized. You
@@ -1066,8 +1129,15 @@ class Dropzone extends Emitter {
       this.element.setAttribute("enctype", "multipart/form-data");
     }
 
-    if (this.element.classList.contains("dropzone") && !this.element.querySelector(".dz-message")) {
-      this.element.appendChild(Dropzone.createElement(`<div class="dz-default dz-message"><span>${this.options.dictDefaultMessage}</span></div>`));
+    if (
+      this.element.classList.contains("dropzone") &&
+      !this.element.querySelector(".dz-message")
+    ) {
+      this.element.appendChild(
+        Dropzone.createElement(
+          `<div class="dz-default dz-message"><span>${this.options.dictDefaultMessage}</span></div>`
+        )
+      );
     }
 
     if (this.clickableElements.length) {
@@ -1077,13 +1147,16 @@ class Dropzone extends Emitter {
         }
         this.hiddenFileInput = document.createElement("input");
         this.hiddenFileInput.setAttribute("type", "file");
-        if ((this.options.maxFiles === null) || (this.options.maxFiles > 1)) {
+        if (this.options.maxFiles === null || this.options.maxFiles > 1) {
           this.hiddenFileInput.setAttribute("multiple", "multiple");
         }
         this.hiddenFileInput.className = "dz-hidden-input";
 
         if (this.options.acceptedFiles !== null) {
-          this.hiddenFileInput.setAttribute("accept", this.options.acceptedFiles);
+          this.hiddenFileInput.setAttribute(
+            "accept",
+            this.options.acceptedFiles
+          );
         }
         if (this.options.capture !== null) {
           this.hiddenFileInput.setAttribute("capture", this.options.capture);
@@ -1097,16 +1170,15 @@ class Dropzone extends Emitter {
         this.hiddenFileInput.style.left = "0";
         this.hiddenFileInput.style.height = "0";
         this.hiddenFileInput.style.width = "0";
-        Dropzone.getElement(this.options.hiddenInputContainer, 'hiddenInputContainer').appendChild(this.hiddenFileInput);
+        Dropzone.getElement(
+          this.options.hiddenInputContainer,
+          "hiddenInputContainer"
+        ).appendChild(this.hiddenFileInput);
         return this.hiddenFileInput.addEventListener("change", () => {
-          let {files} = this.hiddenFileInput;
+          let { files } = this.hiddenFileInput;
           let fileNumber = 0;
           if (files.length) {
             for (let file of files) {
-              console.log('file Number',fileNumber)
-              // if(fileNumber == 0){
-              //   this.addFile(file);
-              // }
               this.addFile(file);
               fileNumber++;
             }
@@ -1120,7 +1192,6 @@ class Dropzone extends Emitter {
 
     this.URL = window.URL !== null ? window.URL : window.webkitURL;
 
-
     // Setup all event listeners on the Dropzone object itself.
     // They're not in @setupEventListeners() because they shouldn't be removed
     // again when the dropzone gets disabled.
@@ -1132,23 +1203,26 @@ class Dropzone extends Emitter {
 
     this.on("removedfile", () => this.updateTotalUploadProgress());
 
-    this.on("canceled", file => this.emit("complete", file));
+    this.on("canceled", (file) => this.emit("complete", file));
 
     // Emit a `queuecomplete` event if all files finished uploading.
-    this.on("complete", file => {
-      if ((this.getAddedFiles().length === 0) && (this.getUploadingFiles().length === 0) && (this.getQueuedFiles().length === 0)) {
+    this.on("complete", (file) => {
+      if (
+        this.getAddedFiles().length === 0 &&
+        this.getUploadingFiles().length === 0 &&
+        this.getQueuedFiles().length === 0
+      ) {
         // This needs to be deferred so that `queuecomplete` really triggers after `complete`
-        return setTimeout((() => this.emit("queuecomplete")), 0);
+        return setTimeout(() => this.emit("queuecomplete"), 0);
       }
     });
-
 
     let noPropagation = function (e) {
       e.stopPropagation();
       if (e.preventDefault) {
         return e.preventDefault();
       } else {
-        return e.returnValue = false;
+        return (e.returnValue = false);
       }
     };
 
@@ -1157,58 +1231,65 @@ class Dropzone extends Emitter {
       {
         element: this.element,
         events: {
-          "dragstart": e => {
+          dragstart: (e) => {
             return this.emit("dragstart", e);
           },
-          "dragenter": e => {
+          dragenter: (e) => {
             noPropagation(e);
             return this.emit("dragenter", e);
           },
-          "dragover": e => {
+          dragover: (e) => {
             // Makes it possible to drag files from chrome's download bar
             // http://stackoverflow.com/questions/19526430/drag-and-drop-file-uploads-from-chrome-downloads-bar
             // Try is required to prevent bug in Internet Explorer 11 (SCRIPT65535 exception)
             let efct;
             try {
               efct = e.dataTransfer.effectAllowed;
-            } catch (error) {
-            }
-            e.dataTransfer.dropEffect = ('move' === efct) || ('linkMove' === efct) ? 'move' : 'copy';
+            } catch (error) {}
+            e.dataTransfer.dropEffect =
+              "move" === efct || "linkMove" === efct ? "move" : "copy";
 
             noPropagation(e);
             return this.emit("dragover", e);
           },
-          "dragleave": e => {
+          dragleave: (e) => {
             return this.emit("dragleave", e);
           },
-          "drop": e => {
+          drop: (e) => {
             noPropagation(e);
             return this.drop(e);
           },
-          "dragend": e => {
+          dragend: (e) => {
             return this.emit("dragend", e);
-          }
-        }
+          },
+        },
 
         // This is disabled right now, because the browsers don't implement it properly.
         // "paste": (e) =>
         //   noPropagation e
         //   @paste e
-      }
+      },
     ];
 
-    this.clickableElements.forEach(clickableElement => {
+    this.clickableElements.forEach((clickableElement) => {
       return this.listeners.push({
         element: clickableElement,
         events: {
-          "click": evt => {
+          click: (evt) => {
             // Only the actual dropzone or the message element should trigger file selection
-            if ((clickableElement !== this.element) || ((evt.target === this.element) || Dropzone.elementInside(evt.target, this.element.querySelector(".dz-message")))) {
+            if (
+              clickableElement !== this.element ||
+              evt.target === this.element ||
+              Dropzone.elementInside(
+                evt.target,
+                this.element.querySelector(".dz-message")
+              )
+            ) {
               this.hiddenFileInput.click(); // Forward the click
             }
             return true;
-          }
-        }
+          },
+        },
       });
     });
 
@@ -1221,14 +1302,15 @@ class Dropzone extends Emitter {
   destroy() {
     this.disable();
     this.removeAllFiles(true);
-    if (this.hiddenFileInput != null ? this.hiddenFileInput.parentNode : undefined) {
+    if (
+      this.hiddenFileInput != null ? this.hiddenFileInput.parentNode : undefined
+    ) {
       this.hiddenFileInput.parentNode.removeChild(this.hiddenFileInput);
       this.hiddenFileInput = null;
     }
     delete this.element.dropzone;
     return Dropzone.instances.splice(Dropzone.instances.indexOf(this), 1);
   }
-
 
   updateTotalUploadProgress() {
     let totalUploadProgress;
@@ -1247,7 +1329,12 @@ class Dropzone extends Emitter {
       totalUploadProgress = 100;
     }
 
-    return this.emit("totaluploadprogress", totalUploadProgress, totalBytes, totalBytesSent);
+    return this.emit(
+      "totaluploadprogress",
+      totalUploadProgress,
+      totalBytes,
+      totalBytesSent
+    );
   }
 
   // @options.paramName can be a function taking one parameter rather than a string.
@@ -1256,7 +1343,9 @@ class Dropzone extends Emitter {
     if (typeof this.options.paramName === "function") {
       return this.options.paramName(n);
     } else {
-      return `${this.options.paramName}${this.options.uploadMultiple ? `[${n}]` : ""}`;
+      return `${this.options.paramName}${
+        this.options.uploadMultiple ? `[${n}]` : ""
+      }`;
     }
   }
 
@@ -1275,19 +1364,25 @@ class Dropzone extends Emitter {
   // This code has to pass in IE7 :(
   getFallbackForm() {
     let existingFallback, form;
-    if (existingFallback = this.getExistingFallback()) {
+    if ((existingFallback = this.getExistingFallback())) {
       return existingFallback;
     }
 
-    let fieldsString = "<div class=\"dz-fallback\">";
+    let fieldsString = '<div class="dz-fallback">';
     if (this.options.dictFallbackText) {
       fieldsString += `<p>${this.options.dictFallbackText}</p>`;
     }
-    fieldsString += `<input type="file" name="${this._getParamName(0)}" webkitdirectory="true" ${this.options.uploadMultiple ? 'multiple="multiple"' : undefined } /><input type="submit" value="Upload!"></div>`;
+    fieldsString += `<input type="file" name="${this._getParamName(
+      0
+    )}" webkitdirectory="true" ${
+      this.options.uploadMultiple ? 'multiple="multiple"' : undefined
+    } /><input type="submit" value="Upload!"></div>`;
 
     let fields = Dropzone.createElement(fieldsString);
     if (this.element.tagName !== "FORM") {
-      form = Dropzone.createElement(`<form action="${this.options.url}" enctype="multipart/form-data" method="${this.options.method}"></form>`);
+      form = Dropzone.createElement(
+        `<form action="${this.options.url}" enctype="multipart/form-data" method="${this.options.method}"></form>`
+      );
       form.appendChild(fields);
     } else {
       // Make sure that the enctype and method attributes are set properly
@@ -1296,7 +1391,6 @@ class Dropzone extends Emitter {
     }
     return form != null ? form : fields;
   }
-
 
   // Returns the fallback elements if they exist already
   //
@@ -1312,43 +1406,51 @@ class Dropzone extends Emitter {
 
     for (let tagName of ["div", "form"]) {
       var fallback;
-      if (fallback = getFallback(this.element.getElementsByTagName(tagName))) {
+      if (
+        (fallback = getFallback(this.element.getElementsByTagName(tagName)))
+      ) {
         return fallback;
       }
     }
   }
 
-
   // Activates all listeners stored in @listeners
   setupEventListeners() {
     return this.listeners.map((elementListeners) =>
-        (() => {
-          let result = [];
-          for (let event in elementListeners.events) {
-            let listener = elementListeners.events[event];
-            result.push(elementListeners.element.addEventListener(event, listener, false));
-          }
-          return result;
-        })());
+      (() => {
+        let result = [];
+        for (let event in elementListeners.events) {
+          let listener = elementListeners.events[event];
+          result.push(
+            elementListeners.element.addEventListener(event, listener, false)
+          );
+        }
+        return result;
+      })()
+    );
   }
-
 
   // Deactivates all listeners stored in @listeners
   removeEventListeners() {
     return this.listeners.map((elementListeners) =>
-        (() => {
-          let result = [];
-          for (let event in elementListeners.events) {
-            let listener = elementListeners.events[event];
-            result.push(elementListeners.element.removeEventListener(event, listener, false));
-          }
-          return result;
-        })());
+      (() => {
+        let result = [];
+        for (let event in elementListeners.events) {
+          let listener = elementListeners.events[event];
+          result.push(
+            elementListeners.element.removeEventListener(event, listener, false)
+          );
+        }
+        return result;
+      })()
+    );
   }
 
   // Removes all event listeners and cancels all files in the queue or being processed.
   disable() {
-    this.clickableElements.forEach(element => element.classList.remove("dz-clickable"));
+    this.clickableElements.forEach((element) =>
+      element.classList.remove("dz-clickable")
+    );
     this.removeEventListeners();
     this.disabled = true;
 
@@ -1357,7 +1459,9 @@ class Dropzone extends Emitter {
 
   enable() {
     delete this.disabled;
-    this.clickableElements.forEach(element => element.classList.add("dz-clickable"));
+    this.clickableElements.forEach((element) =>
+      element.classList.add("dz-clickable")
+    );
     return this.setupEventListeners();
   }
 
@@ -1367,7 +1471,7 @@ class Dropzone extends Emitter {
     let selectedUnit = "b";
 
     if (size > 0) {
-      let units = ['tb', 'gb', 'mb', 'kb', 'b'];
+      let units = ["tb", "gb", "mb", "kb", "b"];
 
       for (let i = 0; i < units.length; i++) {
         let unit = units[i];
@@ -1386,19 +1490,20 @@ class Dropzone extends Emitter {
     return `<strong>${selectedSize}</strong> ${this.options.dictFileSizeUnits[selectedUnit]}`;
   }
 
-
   // Adds or removes the `dz-max-files-reached` class from the form.
   _updateMaxFilesReachedClass() {
-    if ((this.options.maxFiles != null) && (this.getAcceptedFiles().length >= this.options.maxFiles)) {
+    if (
+      this.options.maxFiles != null &&
+      this.getAcceptedFiles().length >= this.options.maxFiles
+    ) {
       if (this.getAcceptedFiles().length === this.options.maxFiles) {
-        this.emit('maxfilesreached', this.files);
+        this.emit("maxfilesreached", this.files);
       }
       return this.element.classList.add("dz-max-files-reached");
     } else {
       return this.element.classList.remove("dz-max-files-reached");
     }
   }
-
 
   drop(e) {
     if (!e.dataTransfer) {
@@ -1418,8 +1523,8 @@ class Dropzone extends Emitter {
 
     // Even if it's a folder, files.length will contain the folders.
     if (files.length) {
-      let {items} = e.dataTransfer;
-      if (items && items.length && (items[0].webkitGetAsEntry != null)) {
+      let { items } = e.dataTransfer;
+      if (items && items.length && items[0].webkitGetAsEntry != null) {
         // The browser supports dropping of folders, so handle items instead of files
         this._addFilesFromItems(items);
       } else {
@@ -1429,21 +1534,22 @@ class Dropzone extends Emitter {
   }
 
   paste(e) {
-    if (__guard__(e != null ? e.clipboardData : undefined, x => x.items) == null) {
+    if (
+      __guard__(e != null ? e.clipboardData : undefined, (x) => x.items) == null
+    ) {
       return;
     }
 
     this.emit("paste", e);
-    let {items} = e.clipboardData;
+    let { items } = e.clipboardData;
 
     if (items.length) {
       return this._addFilesFromItems(items);
     }
   }
 
-
   handleFiles(files) {
-    for(let file of files) {
+    for (let file of files) {
       this.addFile(file);
     }
   }
@@ -1455,7 +1561,10 @@ class Dropzone extends Emitter {
       let result = [];
       for (let item of items) {
         var entry;
-        if ((item.webkitGetAsEntry != null) && (entry = item.webkitGetAsEntry())) {
+        if (
+          item.webkitGetAsEntry != null &&
+          (entry = item.webkitGetAsEntry())
+        ) {
           if (entry.isFile) {
             result.push(this.addFile(item.getAsFile()));
           } else if (entry.isDirectory) {
@@ -1465,7 +1574,7 @@ class Dropzone extends Emitter {
             result.push(undefined);
           }
         } else if (item.getAsFile != null) {
-          if ((item.kind == null) || (item.kind === "file")) {
+          if (item.kind == null || item.kind === "file") {
             result.push(this.addFile(item.getAsFile()));
           } else {
             result.push(undefined);
@@ -1478,43 +1587,44 @@ class Dropzone extends Emitter {
     })();
   }
 
-
   // Goes through the directory, and adds each file it finds recursively
   _addFilesFromDirectory(directory, path) {
     let dirReader = directory.createReader();
 
-    let errorHandler = error => __guardMethod__(console, 'log', o => o.log(error));
+    let errorHandler = (error) =>
+      __guardMethod__(console, "log", (o) => o.log(error));
 
     var readEntries = () => {
-      return dirReader.readEntries(entries => {
-            if (entries.length > 0) {
-              for (let entry of entries) {
-                if (entry.isFile) {
-                  entry.file(file => {
-                    if (this.options.ignoreHiddenFiles && (file.name.substring(0, 1) === '.')) {
-                      return;
-                    }
-                    file.fullPath = `${path}/${file.name}`;
-                    return this.addFile(file, true, dirReader);
-                  });
-                } else if (entry.isDirectory) {
-                  this._addFilesFromDirectory(entry, `${path}/${entry.name}`);
+      return dirReader.readEntries((entries) => {
+        if (entries.length > 0) {
+          for (let entry of entries) {
+            if (entry.isFile) {
+              entry.file((file) => {
+                if (
+                  this.options.ignoreHiddenFiles &&
+                  file.name.substring(0, 1) === "."
+                ) {
+                  return;
                 }
-              }
-
-              // Recursively call readEntries() again, since browser only handle
-              // the first 100 entries.
-              // See: https://developer.mozilla.org/en-US/docs/Web/API/DirectoryReader#readEntries
-              readEntries();
+                file.fullPath = `${path}/${file.name}`;
+                return this.addFile(file, true, dirReader);
+              });
+            } else if (entry.isDirectory) {
+              this._addFilesFromDirectory(entry, `${path}/${entry.name}`);
             }
-            return null;
           }
-          , errorHandler);
+
+          // Recursively call readEntries() again, since browser only handle
+          // the first 100 entries.
+          // See: https://developer.mozilla.org/en-US/docs/Web/API/DirectoryReader#readEntries
+          readEntries();
+        }
+        return null;
+      }, errorHandler);
     };
 
     return readEntries();
   }
-
 
   // If `done()` is called without argument the file is accepted
   // If you call it with an error message, the file is rejected
@@ -1523,12 +1633,27 @@ class Dropzone extends Emitter {
   // This function checks the filesize, and if the file.type passes the
   // `acceptedFiles` check.
   accept(file, done) {
-    if (this.options.maxFilesize && file.size > (this.options.maxFilesize * 1024 * 1024)) {
-      return done(this.options.dictFileTooBig.replace("{{filesize}}", Math.round(file.size / 1024 / 10.24) / 100).replace("{{maxFilesize}}", this.options.maxFilesize));
+    if (
+      this.options.maxFilesize &&
+      file.size > this.options.maxFilesize * 1024 * 1024
+    ) {
+      return done(
+        this.options.dictFileTooBig
+          .replace("{{filesize}}", Math.round(file.size / 1024 / 10.24) / 100)
+          .replace("{{maxFilesize}}", this.options.maxFilesize)
+      );
     } else if (!Dropzone.isValidFile(file, this.options.acceptedFiles)) {
       return done(this.options.dictInvalidFileType);
-    } else if ((this.options.maxFiles != null) && (this.getAcceptedFiles().length >= this.options.maxFiles)) {
-      done(this.options.dictMaxFilesExceeded.replace("{{maxFiles}}", this.options.maxFiles));
+    } else if (
+      this.options.maxFiles != null &&
+      this.getAcceptedFiles().length >= this.options.maxFiles
+    ) {
+      done(
+        this.options.dictMaxFilesExceeded.replace(
+          "{{maxFiles}}",
+          this.options.maxFiles
+        )
+      );
       return this.emit("maxfilesexceeded", file);
     } else {
       return this.options.accept.call(this, file, done);
@@ -1540,7 +1665,6 @@ class Dropzone extends Emitter {
     this.newarray.push(file);
     //this.newarray2.push(file);
     c = this.newarray.length;
-    console.log('addFile addFile::', c)
     file.upload = {
       uuid: Dropzone.uuidv4(),
       progress: 0,
@@ -1549,18 +1673,19 @@ class Dropzone extends Emitter {
       total: file.size,
       bytesSent: 0,
       filename: this._renameFile(file),
-      chunked: this.options.chunking && (this.options.forceChunking || file.size > this.options.chunkSize),
-      totalChunkCount: Math.ceil(file.size / this.options.chunkSize)
+      chunked:
+        this.options.chunking &&
+        (this.options.forceChunking || file.size > this.options.chunkSize),
+      totalChunkCount: Math.ceil(file.size / this.options.chunkSize),
     };
     this.files.push(file);
 
     file.status = Dropzone.ADDED;
-    console.log('Directory',isDir)
     this.emit("addedfile", file, isDir, c);
 
     this._enqueueThumbnail(file);
 
-    return this.accept(file, error => {
+    return this.accept(file, (error) => {
       if (error) {
         file.accepted = false;
         this._errorProcessing([file], error); // Will set the file.status
@@ -1574,7 +1699,6 @@ class Dropzone extends Emitter {
     });
   }
 
-
   // Wrapper for enqueueFile
   enqueueFiles(files) {
     for (let file of files) {
@@ -1584,37 +1708,49 @@ class Dropzone extends Emitter {
   }
 
   enqueueFile(file) {
-    if ((file.status === Dropzone.ADDED) && (file.accepted === true)) {
+    if (file.status === Dropzone.ADDED && file.accepted === true) {
       file.status = Dropzone.QUEUED;
       if (this.options.autoProcessQueue) {
-        return setTimeout((() => this.processQueue()), 0); // Deferring the call
+        return setTimeout(() => this.processQueue(), 0); // Deferring the call
       }
     } else {
-      throw new Error("This file can't be queued because it has already been processed or was rejected.");
+      throw new Error(
+        "This file can't be queued because it has already been processed or was rejected."
+      );
     }
   }
 
   _enqueueThumbnail(file) {
-    if (this.options.createImageThumbnails && file.type.match(/image.*/) && (file.size <= (this.options.maxThumbnailFilesize * 1024 * 1024))) {
+    if (
+      this.options.createImageThumbnails &&
+      file.type.match(/image.*/) &&
+      file.size <= this.options.maxThumbnailFilesize * 1024 * 1024
+    ) {
       this._thumbnailQueue.push(file);
-      return setTimeout((() => this._processThumbnailQueue()), 0); // Deferring the call
+      return setTimeout(() => this._processThumbnailQueue(), 0); // Deferring the call
     }
   }
 
   _processThumbnailQueue() {
-    if (this._processingThumbnail || (this._thumbnailQueue.length === 0)) {
+    if (this._processingThumbnail || this._thumbnailQueue.length === 0) {
       return;
     }
 
     this._processingThumbnail = true;
     let file = this._thumbnailQueue.shift();
-    return this.createThumbnail(file, this.options.thumbnailWidth, this.options.thumbnailHeight, this.options.thumbnailMethod, true, dataUrl => {
-      this.emit("thumbnail", file, dataUrl);
-      this._processingThumbnail = false;
-      return this._processThumbnailQueue();
-    });
+    return this.createThumbnail(
+      file,
+      this.options.thumbnailWidth,
+      this.options.thumbnailHeight,
+      this.options.thumbnailMethod,
+      true,
+      (dataUrl) => {
+        this.emit("thumbnail", file, dataUrl);
+        this._processingThumbnail = false;
+        return this._processThumbnailQueue();
+      }
+    );
   }
-
 
   // Can be called by the user to remove a file
   removeFile(file) {
@@ -1636,7 +1772,7 @@ class Dropzone extends Emitter {
       cancelIfNecessary = false;
     }
     for (let file of this.files.slice()) {
-      if ((file.status !== Dropzone.UPLOADING) || cancelIfNecessary) {
+      if (file.status !== Dropzone.UPLOADING || cancelIfNecessary) {
         this.removeFile(file);
       }
     }
@@ -1647,30 +1783,42 @@ class Dropzone extends Emitter {
   // `options.transformFile` if `resizeWidth` or `resizeHeight` are set. The callback is invoked with
   // the resized blob.
   resizeImage(file, width, height, resizeMethod, callback) {
-    return this.createThumbnail(file, width, height, resizeMethod, true, (dataUrl, canvas) => {
-      if (canvas == null) {
-        // The image has not been resized
-        return callback(file);
-      } else {
-        let {resizeMimeType} = this.options;
-        if (resizeMimeType == null) {
-          resizeMimeType = file.type;
+    return this.createThumbnail(
+      file,
+      width,
+      height,
+      resizeMethod,
+      true,
+      (dataUrl, canvas) => {
+        if (canvas == null) {
+          // The image has not been resized
+          return callback(file);
+        } else {
+          let { resizeMimeType } = this.options;
+          if (resizeMimeType == null) {
+            resizeMimeType = file.type;
+          }
+          let resizedDataURL = canvas.toDataURL(
+            resizeMimeType,
+            this.options.resizeQuality
+          );
+          if (
+            resizeMimeType === "image/jpeg" ||
+            resizeMimeType === "image/jpg"
+          ) {
+            // Now add the original EXIF information
+            resizedDataURL = ExifRestore.restore(file.dataURL, resizedDataURL);
+          }
+          return callback(Dropzone.dataURItoBlob(resizedDataURL));
         }
-        let resizedDataURL = canvas.toDataURL(resizeMimeType, this.options.resizeQuality);
-        if ((resizeMimeType === 'image/jpeg') || (resizeMimeType === 'image/jpg')) {
-          // Now add the original EXIF information
-          resizedDataURL = ExifRestore.restore(file.dataURL, resizedDataURL);
-        }
-        return callback(Dropzone.dataURItoBlob(resizedDataURL));
       }
-    });
+    );
   }
 
   createThumbnail(file, width, height, resizeMethod, fixOrientation, callback) {
-    let fileReader = new FileReader;
+    let fileReader = new FileReader();
 
     fileReader.onload = () => {
-
       file.dataURL = fileReader.result;
 
       // Don't bother creating a thumbnail for SVG images since they're vector
@@ -1681,13 +1829,28 @@ class Dropzone extends Emitter {
         return;
       }
 
-      return this.createThumbnailFromUrl(file, width, height, resizeMethod, fixOrientation, callback);
+      return this.createThumbnailFromUrl(
+        file,
+        width,
+        height,
+        resizeMethod,
+        fixOrientation,
+        callback
+      );
     };
 
     return fileReader.readAsDataURL(file);
   }
 
-  createThumbnailFromUrl(file, width, height, resizeMethod, fixOrientation, callback, crossOrigin) {
+  createThumbnailFromUrl(
+    file,
+    width,
+    height,
+    resizeMethod,
+    fixOrientation,
+    callback,
+    crossOrigin
+  ) {
     // Not using `new Image` here because of a bug in latest Chrome versions.
     // See https://github.com/enyo/dropzone/pull/226
     let img = document.createElement("img");
@@ -1697,20 +1860,25 @@ class Dropzone extends Emitter {
     }
 
     img.onload = () => {
-      let loadExif = callback => callback(1);
-      if ((typeof EXIF !== 'undefined' && EXIF !== null) && fixOrientation) {
-        loadExif = callback =>
-            EXIF.getData(img, function () {
-              return callback(EXIF.getTag(this, 'Orientation'));
-            })
-        ;
+      let loadExif = (callback) => callback(1);
+      if (typeof EXIF !== "undefined" && EXIF !== null && fixOrientation) {
+        loadExif = (callback) =>
+          EXIF.getData(img, function () {
+            return callback(EXIF.getTag(this, "Orientation"));
+          });
       }
 
-      return loadExif(orientation => {
+      return loadExif((orientation) => {
         file.width = img.width;
         file.height = img.height;
 
-        let resizeInfo = this.options.resize.call(this, file, width, height, resizeMethod);
+        let resizeInfo = this.options.resize.call(
+          this,
+          file,
+          width,
+          height,
+          resizeMethod
+        );
 
         let canvas = document.createElement("canvas");
         let ctx = canvas.getContext("2d");
@@ -1763,7 +1931,18 @@ class Dropzone extends Emitter {
         }
 
         // This is a bugfix for iOS' scaling bug.
-        drawImageIOSFix(ctx, img, resizeInfo.srcX != null ? resizeInfo.srcX : 0, resizeInfo.srcY != null ? resizeInfo.srcY : 0, resizeInfo.srcWidth, resizeInfo.srcHeight, resizeInfo.trgX != null ? resizeInfo.trgX : 0, resizeInfo.trgY != null ? resizeInfo.trgY : 0, resizeInfo.trgWidth, resizeInfo.trgHeight);
+        drawImageIOSFix(
+          ctx,
+          img,
+          resizeInfo.srcX != null ? resizeInfo.srcX : 0,
+          resizeInfo.srcY != null ? resizeInfo.srcY : 0,
+          resizeInfo.srcWidth,
+          resizeInfo.srcHeight,
+          resizeInfo.trgX != null ? resizeInfo.trgX : 0,
+          resizeInfo.trgY != null ? resizeInfo.trgY : 0,
+          resizeInfo.trgWidth,
+          resizeInfo.trgHeight
+        );
 
         let thumbnail = canvas.toDataURL("image/png");
 
@@ -1777,13 +1956,12 @@ class Dropzone extends Emitter {
       img.onerror = callback;
     }
 
-    return img.src = file.dataURL;
+    return (img.src = file.dataURL);
   }
-
 
   // Goes through the queue and processes files if there aren't too many already.
   processQueue() {
-    let {parallelUploads} = this.options;
+    let { parallelUploads } = this.options;
     let processingLength = this.getUploadingFiles().length;
     let i = processingLength;
 
@@ -1800,7 +1978,9 @@ class Dropzone extends Emitter {
 
     if (this.options.uploadMultiple) {
       // The files should be uploaded in one request
-      return this.processFiles(queuedFiles.slice(0, (parallelUploads - processingLength)));
+      return this.processFiles(
+        queuedFiles.slice(0, parallelUploads - processingLength)
+      );
     } else {
       while (i < parallelUploads) {
         if (!queuedFiles.length) {
@@ -1812,12 +1992,10 @@ class Dropzone extends Emitter {
     }
   }
 
-
   // Wrapper for `processFiles`
   processFile(file) {
     return this.processFiles([file]);
   }
-
 
   // Loads the file, then calls finishedLoading()
   processFiles(files) {
@@ -1835,12 +2013,12 @@ class Dropzone extends Emitter {
     return this.uploadFiles(files);
   }
 
-
   _getFilesWithXhr(xhr) {
     let files;
-    return files = (this.files.filter((file) => file.xhr === xhr).map((file) => file));
+    return (files = this.files
+      .filter((file) => file.xhr === xhr)
+      .map((file) => file));
   }
-
 
   // Cancels the file upload and sets the status to CANCELED
   // **if** the file is actually being uploaded.
@@ -1852,7 +2030,7 @@ class Dropzone extends Emitter {
       for (let groupedFile of groupedFiles) {
         groupedFile.status = Dropzone.CANCELED;
       }
-      if (typeof file.xhr !== 'undefined') {
+      if (typeof file.xhr !== "undefined") {
         file.xhr.abort();
       }
       for (let groupedFile of groupedFiles) {
@@ -1861,8 +2039,10 @@ class Dropzone extends Emitter {
       if (this.options.uploadMultiple) {
         this.emit("canceledmultiple", groupedFiles);
       }
-
-    } else if (file.status === Dropzone.ADDED || file.status === Dropzone.QUEUED) {
+    } else if (
+      file.status === Dropzone.ADDED ||
+      file.status === Dropzone.QUEUED
+    ) {
       file.status = Dropzone.CANCELED;
       this.emit("canceled", file);
       if (this.options.uploadMultiple) {
@@ -1876,13 +2056,15 @@ class Dropzone extends Emitter {
   }
 
   resolveOption(option, ...args) {
-    if (typeof option === 'function') {
+    if (typeof option === "function") {
       return option.apply(this, args);
     }
     return option;
   }
 
-  uploadFile(file) { return this.uploadFiles([file]); }
+  uploadFile(file) {
+    return this.uploadFiles([file]);
+  }
 
   uploadFiles(files) {
     this._transformFiles(files, (transformedFiles) => {
@@ -1915,9 +2097,11 @@ class Dropzone extends Emitter {
 
           let dataBlock = {
             name: this._getParamName(0),
-            data: transformedFile.webkitSlice ? transformedFile.webkitSlice(start, end) : transformedFile.slice(start, end),
+            data: transformedFile.webkitSlice
+              ? transformedFile.webkitSlice(start, end)
+              : transformedFile.slice(start, end),
             filename: file.upload.filename,
-            chunkIndex: chunkIndex
+            chunkIndex: chunkIndex,
           };
 
           file.upload.chunks[chunkIndex] = {
@@ -1926,9 +2110,8 @@ class Dropzone extends Emitter {
             dataBlock: dataBlock, // In case we want to retry.
             status: Dropzone.UPLOADING,
             progress: 0,
-            retries: 0 // The number of times this block has been retried.
+            retries: 0, // The number of times this block has been retried.
           };
-
 
           this._uploadData(files, [dataBlock]);
         };
@@ -1942,7 +2125,7 @@ class Dropzone extends Emitter {
           // Leaving this reference to xhr intact here will cause memory leaks in some browsers
           chunk.xhr = null;
 
-          for (let i = 0; i < file.upload.totalChunkCount; i ++) {
+          for (let i = 0; i < file.upload.totalChunkCount; i++) {
             if (file.upload.chunks[i] === undefined) {
               return handleNextChunk();
             }
@@ -1953,7 +2136,7 @@ class Dropzone extends Emitter {
 
           if (allFinished) {
             this.options.chunksUploaded(file, () => {
-              this._finished(files, '', null);
+              this._finished(files, "", null);
             });
           }
         };
@@ -1962,8 +2145,7 @@ class Dropzone extends Emitter {
           for (let i = 0; i < file.upload.totalChunkCount; i++) {
             handleNextChunk();
           }
-        }
-        else {
+        } else {
           handleNextChunk();
         }
       } else {
@@ -1972,7 +2154,7 @@ class Dropzone extends Emitter {
           dataBlocks[i] = {
             name: this._getParamName(i),
             data: transformedFiles[i],
-            filename: files[i].upload.filename
+            filename: files[i].upload.filename,
           };
         }
         this._uploadData(files, dataBlocks);
@@ -1983,7 +2165,10 @@ class Dropzone extends Emitter {
   /// Returns the right chunk for given file and xhr
   _getChunk(file, xhr) {
     for (let i = 0; i < file.upload.totalChunkCount; i++) {
-      if (file.upload.chunks[i] !== undefined && file.upload.chunks[i].xhr === xhr) {
+      if (
+        file.upload.chunks[i] !== undefined &&
+        file.upload.chunks[i].xhr === xhr
+      ) {
         return file.upload.chunks[i];
       }
     }
@@ -2014,8 +2199,7 @@ class Dropzone extends Emitter {
     // Has to be after `.open()`. See https://github.com/enyo/dropzone/issues/179
     xhr.withCredentials = !!this.options.withCredentials;
 
-
-    xhr.onload = e => {
+    xhr.onload = (e) => {
       this._finishedUploading(files, xhr, e);
     };
 
@@ -2025,10 +2209,11 @@ class Dropzone extends Emitter {
 
     // Some browsers do not have the .upload property
     let progressObj = xhr.upload != null ? xhr.upload : xhr;
-    progressObj.onprogress = (e) => this._updateFilesUploadProgress(files, xhr, e);
+    progressObj.onprogress = (e) =>
+      this._updateFilesUploadProgress(files, xhr, e);
 
     let headers = {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Cache-Control": "no-cache",
       "X-Requested-With": "XMLHttpRequest",
     };
@@ -2049,8 +2234,13 @@ class Dropzone extends Emitter {
     // Adding all @options parameters
     if (this.options.params) {
       let additionalParams = this.options.params;
-      if (typeof additionalParams === 'function') {
-        additionalParams = additionalParams.call(this, files, xhr, files[0].upload.chunked ? this._getChunk(files[0], xhr) : null);
+      if (typeof additionalParams === "function") {
+        additionalParams = additionalParams.call(
+          this,
+          files,
+          xhr,
+          files[0].upload.chunked ? this._getChunk(files[0], xhr) : null
+        );
       }
 
       for (let key in additionalParams) {
@@ -2067,9 +2257,7 @@ class Dropzone extends Emitter {
       this.emit("sendingmultiple", files, xhr, formData);
     }
 
-
     this._addFormElementData(formData);
-
 
     // Finally add the files
     // Has to be last because some servers (eg: S3) expect the file to be the last parameter
@@ -2080,7 +2268,6 @@ class Dropzone extends Emitter {
 
     this.submitRequest(xhr, formData, files);
   }
-
 
   // Transforms all files with this.options.transformFile and invokes done with the transformed files when done.
   _transformFiles(files, done) {
@@ -2101,22 +2288,28 @@ class Dropzone extends Emitter {
   _addFormElementData(formData) {
     // Take care of other input elements
     if (this.element.tagName === "FORM") {
-      for (let input of this.element.querySelectorAll("input, textarea, select, button")) {
+      for (let input of this.element.querySelectorAll(
+        "input, textarea, select, button"
+      )) {
         let inputName = input.getAttribute("name");
         let inputType = input.getAttribute("type");
         if (inputType) inputType = inputType.toLowerCase();
 
         // If the input doesn't have a name, we can't use it.
-        if (typeof inputName === 'undefined' || inputName === null) continue;
+        if (typeof inputName === "undefined" || inputName === null) continue;
 
-        if ((input.tagName === "SELECT") && input.hasAttribute("multiple")) {
+        if (input.tagName === "SELECT" && input.hasAttribute("multiple")) {
           // Possibly multiple values
           for (let option of input.options) {
             if (option.selected) {
               formData.append(inputName, option.value);
             }
           }
-        } else if (!inputType || (inputType !== "checkbox" && inputType !== "radio") || input.checked) {
+        } else if (
+          !inputType ||
+          (inputType !== "checkbox" && inputType !== "radio") ||
+          input.checked
+        ) {
           formData.append(inputName, input.value);
         }
       }
@@ -2127,7 +2320,7 @@ class Dropzone extends Emitter {
   // If e is not provided, it is assumed that the upload is finished.
   _updateFilesUploadProgress(files, xhr, e) {
     let progress;
-    if (typeof e !== 'undefined') {
+    if (typeof e !== "undefined") {
       progress = (100 * e.loaded) / e.total;
 
       if (files[0].upload.chunked) {
@@ -2137,18 +2330,24 @@ class Dropzone extends Emitter {
         chunk.progress = progress;
         chunk.total = e.total;
         chunk.bytesSent = e.loaded;
-        let fileProgress = 0, fileTotal, fileBytesSent;
+        let fileProgress = 0,
+          fileTotal,
+          fileBytesSent;
         file.upload.progress = 0;
         file.upload.total = 0;
         file.upload.bytesSent = 0;
         for (let i = 0; i < file.upload.totalChunkCount; i++) {
-          if (file.upload.chunks[i] !== undefined && file.upload.chunks[i].progress !== undefined) {
+          if (
+            file.upload.chunks[i] !== undefined &&
+            file.upload.chunks[i].progress !== undefined
+          ) {
             file.upload.progress += file.upload.chunks[i].progress;
             file.upload.total += file.upload.chunks[i].total;
             file.upload.bytesSent += file.upload.chunks[i].bytesSent;
           }
         }
-        file.upload.progress = file.upload.progress / file.upload.totalChunkCount;
+        file.upload.progress =
+          file.upload.progress / file.upload.totalChunkCount;
       } else {
         for (let file of files) {
           file.upload.progress = progress;
@@ -2157,7 +2356,12 @@ class Dropzone extends Emitter {
         }
       }
       for (let file of files) {
-        this.emit("uploadprogress", file, file.upload.progress, file.upload.bytesSent);
+        this.emit(
+          "uploadprogress",
+          file,
+          file.upload.progress,
+          file.upload.bytesSent
+        );
       }
     } else {
       // Called when the file finished uploading
@@ -2167,7 +2371,10 @@ class Dropzone extends Emitter {
       progress = 100;
 
       for (let file of files) {
-        if ((file.upload.progress !== 100) || (file.upload.bytesSent !== file.upload.total)) {
+        if (
+          file.upload.progress !== 100 ||
+          file.upload.bytesSent !== file.upload.total
+        ) {
           allFilesFinished = false;
         }
         file.upload.progress = progress;
@@ -2183,9 +2390,7 @@ class Dropzone extends Emitter {
         this.emit("uploadprogress", file, progress, file.upload.bytesSent);
       }
     }
-
   }
-
 
   _finishedUploading(files, xhr, e) {
     let response;
@@ -2198,10 +2403,13 @@ class Dropzone extends Emitter {
       return;
     }
 
-    if ((xhr.responseType !== 'arraybuffer') && (xhr.responseType !== 'blob')) {
+    if (xhr.responseType !== "arraybuffer" && xhr.responseType !== "blob") {
       response = xhr.responseText;
 
-      if (xhr.getResponseHeader("content-type") && ~xhr.getResponseHeader("content-type").indexOf("application/json")) {
+      if (
+        xhr.getResponseHeader("content-type") &&
+        ~xhr.getResponseHeader("content-type").indexOf("application/json")
+      ) {
         try {
           response = JSON.parse(response);
         } catch (error) {
@@ -2235,12 +2443,17 @@ class Dropzone extends Emitter {
         this._uploadData(files, [chunk.dataBlock]);
         return;
       } else {
-        console.warn('Retried this chunk too often. Giving up.')
+        console.warn("Retried this chunk too often. Giving up.");
       }
     }
 
     for (let file of files) {
-      this._errorProcessing(files, response || this.options.dictResponseError.replace("{{statusCode}}", xhr.status), xhr);
+      this._errorProcessing(
+        files,
+        response ||
+          this.options.dictResponseError.replace("{{statusCode}}", xhr.status),
+        xhr
+      );
     }
   }
 
@@ -2285,17 +2498,19 @@ class Dropzone extends Emitter {
   }
 
   static uuidv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
-  };
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+      /[xy]/g,
+      function (c) {
+        let r = (Math.random() * 16) | 0,
+          v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      }
+    );
+  }
 }
 Dropzone.initClass();
 
-
 Dropzone.version = "5.5.0";
-
 
 // This is a map of options for your different dropzones. Add configurations
 // to this object for your different dropzone elemens.
@@ -2313,7 +2528,6 @@ Dropzone.version = "5.5.0";
 //     <form action="/upload" id="my-dropzone-element-id" class="dropzone"></form>
 Dropzone.options = {};
 
-
 // Returns the options for an element or undefined if none available.
 Dropzone.optionsForElement = function (element) {
   // Get the `Dropzone.options.elementId` for this element if it exists
@@ -2324,7 +2538,6 @@ Dropzone.optionsForElement = function (element) {
   }
 };
 
-
 // Holds a list of all dropzone instances
 Dropzone.instances = [];
 
@@ -2334,11 +2547,12 @@ Dropzone.forElement = function (element) {
     element = document.querySelector(element);
   }
   if ((element != null ? element.dropzone : undefined) == null) {
-    throw new Error("No Dropzone found for given element. This is probably because you're trying to access it before Dropzone had the time to initialize. Use the `init` option to setup any additional observers on your Dropzone.");
+    throw new Error(
+      "No Dropzone found for given element. This is probably because you're trying to access it before Dropzone had the time to initialize. Use the `init` option to setup any additional observers on your Dropzone."
+    );
   }
   return element.dropzone;
 };
-
 
 // Set to false if you don't want Dropzone to automatically find and attach to .dropzone elements.
 Dropzone.autoDiscover = true;
@@ -2351,19 +2565,18 @@ Dropzone.discover = function () {
   } else {
     dropzones = [];
     // IE :(
-    let checkElements = elements =>
-        (() => {
-          let result = [];
-          for (let el of elements) {
-            if (/(^| )dropzone($| )/.test(el.className)) {
-              result.push(dropzones.push(el));
-            } else {
-              result.push(undefined);
-            }
+    let checkElements = (elements) =>
+      (() => {
+        let result = [];
+        for (let el of elements) {
+          if (/(^| )dropzone($| )/.test(el.className)) {
+            result.push(dropzones.push(el));
+          } else {
+            result.push(undefined);
           }
-          return result;
-        })()
-    ;
+        }
+        return result;
+      })();
     checkElements(document.getElementsByTagName("div"));
     checkElements(document.getElementsByTagName("form"));
   }
@@ -2382,7 +2595,6 @@ Dropzone.discover = function () {
   })();
 };
 
-
 // Since the whole Drag'n'Drop API is pretty new, some browsers implement it,
 // but not correctly.
 // So I created a blacklist of userAgents. Yes, yes. Browser sniffing, I know.
@@ -2396,15 +2608,21 @@ Dropzone.discover = function () {
 //
 Dropzone.blacklistedBrowsers = [
   // The mac os and windows phone version of opera 12 seems to have a problem with the File drag'n'drop API.
-  /opera.*(Macintosh|Windows Phone).*version\/12/i
+  /opera.*(Macintosh|Windows Phone).*version\/12/i,
 ];
-
 
 // Checks if the browser is supported
 Dropzone.isBrowserSupported = function () {
   let capableBrowser = true;
 
-  if (window.File && window.FileReader && window.FileList && window.Blob && window.FormData && document.querySelector) {
+  if (
+    window.File &&
+    window.FileReader &&
+    window.FileList &&
+    window.Blob &&
+    window.FormData &&
+    document.querySelector
+  ) {
     if (!("classList" in document.createElement("a"))) {
       capableBrowser = false;
     } else {
@@ -2426,27 +2644,33 @@ Dropzone.isBrowserSupported = function () {
 Dropzone.dataURItoBlob = function (dataURI) {
   // convert base64 to raw binary data held in a string
   // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-  let byteString = atob(dataURI.split(',')[1]);
+  let byteString = atob(dataURI.split(",")[1]);
 
   // separate out the mime component
-  let mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+  let mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
 
   // write the bytes of the string to an ArrayBuffer
   let ab = new ArrayBuffer(byteString.length);
   let ia = new Uint8Array(ab);
-  for (let i = 0, end = byteString.length, asc = 0 <= end; asc ? i <= end : i >= end; asc ? i++ : i--) {
+  for (
+    let i = 0, end = byteString.length, asc = 0 <= end;
+    asc ? i <= end : i >= end;
+    asc ? i++ : i--
+  ) {
     ia[i] = byteString.charCodeAt(i);
   }
 
   // write the ArrayBuffer to a blob
-  return new Blob([ab], {type: mimeString});
+  return new Blob([ab], { type: mimeString });
 };
 
 // Returns an array without the rejected item
-const without = (list, rejectedItem) => list.filter((item) => item !== rejectedItem).map((item) => item);
+const without = (list, rejectedItem) =>
+  list.filter((item) => item !== rejectedItem).map((item) => item);
 
 // abc-def_ghi -> abcDefGhi
-const camelize = str => str.replace(/[\-_](\w)/g, match => match.charAt(1).toUpperCase());
+const camelize = (str) =>
+  str.replace(/[\-_](\w)/g, (match) => match.charAt(1).toUpperCase());
 
 // Creates an element from string
 Dropzone.createElement = function (string) {
@@ -2468,7 +2692,6 @@ Dropzone.elementInside = function (element, container) {
   return false;
 };
 
-
 Dropzone.getElement = function (el, name) {
   let element;
   if (typeof el === "string") {
@@ -2477,11 +2700,12 @@ Dropzone.getElement = function (el, name) {
     element = el;
   }
   if (element == null) {
-    throw new Error(`Invalid \`${name}\` option provided. Please provide a CSS selector or a plain HTML element.`);
+    throw new Error(
+      `Invalid \`${name}\` option provided. Please provide a CSS selector or a plain HTML element.`
+    );
   }
   return element;
 };
-
 
 Dropzone.getElements = function (els, name) {
   let el, elements;
@@ -2503,8 +2727,10 @@ Dropzone.getElements = function (els, name) {
     elements = [els];
   }
 
-  if ((elements == null) || !elements.length) {
-    throw new Error(`Invalid \`${name}\` option provided. Please provide a CSS selector, a plain HTML element or a list of those.`);
+  if (elements == null || !elements.length) {
+    throw new Error(
+      `Invalid \`${name}\` option provided. Please provide a CSS selector, a plain HTML element or a list of those.`
+    );
   }
 
   return elements;
@@ -2537,7 +2763,14 @@ Dropzone.isValidFile = function (file, acceptedFiles) {
   for (let validType of acceptedFiles) {
     validType = validType.trim();
     if (validType.charAt(0) === ".") {
-      if (file.name.toLowerCase().indexOf(validType.toLowerCase(), file.name.length - validType.length) !== -1) {
+      if (
+        file.name
+          .toLowerCase()
+          .indexOf(
+            validType.toLowerCase(),
+            file.name.length - validType.length
+          ) !== -1
+      ) {
         return true;
       }
     } else if (/\/\*$/.test(validType)) {
@@ -2556,7 +2789,7 @@ Dropzone.isValidFile = function (file, acceptedFiles) {
 };
 
 // Augment jQuery
-if (typeof jQuery !== 'undefined' && jQuery !== null) {
+if (typeof jQuery !== "undefined" && jQuery !== null) {
   jQuery.fn.dropzone = function (options) {
     return this.each(function () {
       return new Dropzone(this, options);
@@ -2564,13 +2797,11 @@ if (typeof jQuery !== 'undefined' && jQuery !== null) {
   };
 }
 
-
-if (typeof module !== 'undefined' && module !== null) {
+if (typeof module !== "undefined" && module !== null) {
   module.exports = Dropzone;
 } else {
   window.Dropzone = Dropzone;
 }
-
 
 // Dropzone file status codes
 Dropzone.ADDED = "added";
@@ -2586,7 +2817,6 @@ Dropzone.PROCESSING = Dropzone.UPLOADING; // alias
 Dropzone.CANCELED = "canceled";
 Dropzone.ERROR = "error";
 Dropzone.SUCCESS = "success";
-
 
 /*
 
@@ -2607,15 +2837,14 @@ let detectVerticalSquash = function (img) {
   canvas.height = ih;
   let ctx = canvas.getContext("2d");
   ctx.drawImage(img, 0, 0);
-  let {data} = ctx.getImageData(1, 0, 1, ih);
-
+  let { data } = ctx.getImageData(1, 0, 1, ih);
 
   // search image edge pixel position in case it is squashed vertically.
   let sy = 0;
   let ey = ih;
   let py = ih;
   while (py > sy) {
-    let alpha = data[((py - 1) * 4) + 3];
+    let alpha = data[(py - 1) * 4 + 3];
 
     if (alpha === 0) {
       ey = py;
@@ -2625,7 +2854,7 @@ let detectVerticalSquash = function (img) {
 
     py = (ey + sy) >> 1;
   }
-  let ratio = (py / ih);
+  let ratio = py / ih;
 
   if (ratio === 0) {
     return 1;
@@ -2641,24 +2870,24 @@ var drawImageIOSFix = function (ctx, img, sx, sy, sw, sh, dx, dy, dw, dh) {
   return ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh / vertSquashRatio);
 };
 
-
 // Based on MinifyJpeg
 // Source: http://www.perry.cz/files/ExifRestorer.js
 // http://elicon.blog57.fc2.com/blog-entry-206.html
 class ExifRestore {
   static initClass() {
-    this.KEY_STR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+    this.KEY_STR =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
   }
 
   static encode64(input) {
-    let output = '';
+    let output = "";
     let chr1 = undefined;
     let chr2 = undefined;
-    let chr3 = '';
+    let chr3 = "";
     let enc1 = undefined;
     let enc2 = undefined;
     let enc3 = undefined;
-    let enc4 = '';
+    let enc4 = "";
     let i = 0;
     while (true) {
       chr1 = input[i++];
@@ -2669,13 +2898,18 @@ class ExifRestore {
       enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
       enc4 = chr3 & 63;
       if (isNaN(chr2)) {
-        enc3 = (enc4 = 64);
+        enc3 = enc4 = 64;
       } else if (isNaN(chr3)) {
         enc4 = 64;
       }
-      output = output + this.KEY_STR.charAt(enc1) + this.KEY_STR.charAt(enc2) + this.KEY_STR.charAt(enc3) + this.KEY_STR.charAt(enc4);
-      chr1 = (chr2 = (chr3 = ''));
-      enc1 = (enc2 = (enc3 = (enc4 = '')));
+      output =
+        output +
+        this.KEY_STR.charAt(enc1) +
+        this.KEY_STR.charAt(enc2) +
+        this.KEY_STR.charAt(enc3) +
+        this.KEY_STR.charAt(enc4);
+      chr1 = chr2 = chr3 = "";
+      enc1 = enc2 = enc3 = enc4 = "";
       if (!(i < input.length)) {
         break;
       }
@@ -2684,10 +2918,12 @@ class ExifRestore {
   }
 
   static restore(origFileBase64, resizedFileBase64) {
-    if (!origFileBase64.match('data:image/jpeg;base64,')) {
+    if (!origFileBase64.match("data:image/jpeg;base64,")) {
       return resizedFileBase64;
     }
-    let rawImage = this.decode64(origFileBase64.replace('data:image/jpeg;base64,', ''));
+    let rawImage = this.decode64(
+      origFileBase64.replace("data:image/jpeg;base64,", "")
+    );
     let segments = this.slice2Segments(rawImage);
     let image = this.exifManipulation(resizedFileBase64, segments);
     return `data:image/jpeg;base64,${this.encode64(image)}`;
@@ -2714,7 +2950,7 @@ class ExifRestore {
   }
 
   static insertExif(resizedFileBase64, exifArray) {
-    let imageData = resizedFileBase64.replace('data:image/jpeg;base64,', '');
+    let imageData = resizedFileBase64.replace("data:image/jpeg;base64,", "");
     let buf = this.decode64(imageData);
     let separatePoint = buf.indexOf(255, 3);
     let mae = buf.slice(0, separatePoint);
@@ -2736,7 +2972,7 @@ class ExifRestore {
       if ((rawImageArray[head] === 255) & (rawImageArray[head + 1] === 216)) {
         head += 2;
       } else {
-        length = (rawImageArray[head + 2] * 256) + rawImageArray[head + 3];
+        length = rawImageArray[head + 2] * 256 + rawImageArray[head + 3];
         let endPoint = head + length + 2;
         let seg = rawImageArray.slice(head, endPoint);
         segments.push(seg);
@@ -2750,22 +2986,24 @@ class ExifRestore {
   }
 
   static decode64(input) {
-    let output = '';
+    let output = "";
     let chr1 = undefined;
     let chr2 = undefined;
-    let chr3 = '';
+    let chr3 = "";
     let enc1 = undefined;
     let enc2 = undefined;
     let enc3 = undefined;
-    let enc4 = '';
+    let enc4 = "";
     let i = 0;
     let buf = [];
     // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
     let base64test = /[^A-Za-z0-9\+\/\=]/g;
     if (base64test.exec(input)) {
-      console.warn('There were invalid base64 characters in the input text.\nValid base64 characters are A-Z, a-z, 0-9, \'+\', \'/\',and \'=\'\nExpect errors in decoding.');
+      console.warn(
+        "There were invalid base64 characters in the input text.\nValid base64 characters are A-Z, a-z, 0-9, '+', '/',and '='\nExpect errors in decoding."
+      );
     }
-    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, '');
+    input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
     while (true) {
       enc1 = this.KEY_STR.indexOf(input.charAt(i++));
       enc2 = this.KEY_STR.indexOf(input.charAt(i++));
@@ -2781,8 +3019,8 @@ class ExifRestore {
       if (enc4 !== 64) {
         buf.push(chr3);
       }
-      chr1 = (chr2 = (chr3 = ''));
-      enc1 = (enc2 = (enc3 = (enc4 = '')));
+      chr1 = chr2 = chr3 = "";
+      enc1 = enc2 = enc3 = enc4 = "";
       if (!(i < input.length)) {
         break;
       }
@@ -2791,7 +3029,6 @@ class ExifRestore {
   }
 }
 ExifRestore.initClass();
-
 
 /*
  * contentloaded.js
@@ -2814,14 +3051,14 @@ let contentLoaded = function (win, fn) {
   let top = true;
   let doc = win.document;
   let root = doc.documentElement;
-  let add = (doc.addEventListener ? "addEventListener" : "attachEvent");
-  let rem = (doc.addEventListener ? "removeEventListener" : "detachEvent");
-  let pre = (doc.addEventListener ? "" : "on");
+  let add = doc.addEventListener ? "addEventListener" : "attachEvent";
+  let rem = doc.addEventListener ? "removeEventListener" : "detachEvent";
+  let pre = doc.addEventListener ? "" : "on";
   var init = function (e) {
-    if ((e.type === "readystatechange") && (doc.readyState !== "complete")) {
+    if (e.type === "readystatechange" && doc.readyState !== "complete") {
       return;
     }
-    ((e.type === "load" ? win : doc))[rem](pre + e.type, init, false);
+    (e.type === "load" ? win : doc)[rem](pre + e.type, init, false);
     if (!done && (done = true)) {
       return fn.call(win, e.type || e);
     }
@@ -2841,8 +3078,7 @@ let contentLoaded = function (win, fn) {
     if (doc.createEventObject && root.doScroll) {
       try {
         top = !win.frameElement;
-      } catch (error) {
-      }
+      } catch (error) {}
       if (top) {
         poll();
       }
@@ -2853,7 +3089,6 @@ let contentLoaded = function (win, fn) {
   }
 };
 
-
 // As a single function to be able to write tests.
 Dropzone._autoDiscoverFunction = function () {
   if (Dropzone.autoDiscover) {
@@ -2863,148 +3098,167 @@ Dropzone._autoDiscoverFunction = function () {
 contentLoaded(window, Dropzone._autoDiscoverFunction);
 
 function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
+  return typeof value !== "undefined" && value !== null
+    ? transform(value)
+    : undefined;
 }
 function __guardMethod__(obj, methodName, transform) {
-  if (typeof obj !== 'undefined' && obj !== null && typeof obj[methodName] === 'function') {
+  if (
+    typeof obj !== "undefined" &&
+    obj !== null &&
+    typeof obj[methodName] === "function"
+  ) {
     return transform(obj, methodName);
   } else {
     return undefined;
   }
 }
 //import Dropzone from 'dropzone' //eslint-disable-line
-import awsEndpoint from '../services/urlsigner'
-Dropzone.autoDiscover = false
+import awsEndpoint from "../services/urlsigner";
+Dropzone.autoDiscover = false;
 export default {
   props: {
     id: {
       type: String,
       required: true,
-      default:'dropzone'
+      default: "dropzone",
     },
     options: {
       type: Object,
-      required: true
+      required: true,
     },
     includeStyling: {
       type: Boolean,
       default: true,
-      required: false
+      required: false,
     },
     awss3: {
       type: Object,
       required: false,
-      default: null
+      default: null,
     },
     destroyDropzone: {
       type: Boolean,
       default: true,
-      required: false
+      required: false,
     },
     duplicateCheck: {
       type: Boolean,
       default: false,
-      required: false
+      required: false,
     },
     useCustomSlot: {
       type: Boolean,
       default: false,
-      required: false
-    }
+      required: false,
+    },
   },
   data() {
     return {
       isS3: false,
       isS3OverridesServerPropagation: false,
       wasQueueAutoProcess: true,
-    }
+    };
   },
   computed: {
     dropzoneSettings() {
       let defaultValues = {
         thumbnailWidth: 200,
-        thumbnailHeight: 200
-      }
-      Object.keys(this.options).forEach(function(key) {
-        defaultValues[key] = this.options[key]
-      }, this)
+        thumbnailHeight: 200,
+      };
+      Object.keys(this.options).forEach(function (key) {
+        defaultValues[key] = this.options[key];
+      }, this);
       if (this.awss3 !== null) {
-        defaultValues['autoProcessQueue'] = false
-        this.isS3 = true //eslint-disable-line
-        this.isS3OverridesServerPropagation = (this.awss3.sendFileToServer === false)  //eslint-disable-line
+        defaultValues["autoProcessQueue"] = false;
+        this.isS3 = true; //eslint-disable-line
+        this.isS3OverridesServerPropagation =
+          this.awss3.sendFileToServer === false; //eslint-disable-line
         if (this.options.autoProcessQueue !== undefined)
-          this.wasQueueAutoProcess = this.options.autoProcessQueue //eslint-disable-line
+          this.wasQueueAutoProcess = this.options.autoProcessQueue; //eslint-disable-line
         if (this.isS3OverridesServerPropagation) {
-          defaultValues['url'] = (files) => {
+          defaultValues["url"] = (files) => {
             return files[0].s3Url;
-          }
+          };
         }
       }
-      return defaultValues
-    }
+      return defaultValues;
+    },
   },
-  mounted () {
+  mounted() {
     if (this.$isServer && this.hasBeenMounted) {
-      return
+      return;
     }
-    this.hasBeenMounted = true
-    this.dropzone = new Dropzone(this.$refs.dropzoneElement, this.dropzoneSettings)
-    let vm = this
-    this.dropzone.on('thumbnail', function(file, dataUrl) {
-      vm.$emit('vdropzone-thumbnail', file, dataUrl)
-    })
-    this.dropzone.on('addedfile', function(file) {
+    this.hasBeenMounted = true;
+    this.dropzone = new Dropzone(
+      this.$refs.dropzoneElement,
+      this.dropzoneSettings
+    );
+    let vm = this;
+    this.dropzone.on("thumbnail", function (file, dataUrl) {
+      vm.$emit("vdropzone-thumbnail", file, dataUrl);
+    });
+    this.dropzone.on("addedfile", function (file) {
       var isDuplicate = false;
       if (vm.duplicateCheck) {
         if (this.files.length) {
           var _i, _len;
-          for (_i = 0, _len = this.files.length; _i < _len - 1; _i++) // -1 to exclude current file
-            {
-                if(this.files[_i].name === file.name && this.files[_i].size === file.size && this.files[_i].lastModifiedDate.toString() === file.lastModifiedDate.toString())
-                {
-                    this.removeFile(file);
-                    isDuplicate = true;
-                    vm.$emit('vdropzone-duplicate-file', file)
-                }
+          for (
+            _i = 0, _len = this.files.length;
+            _i < _len - 1;
+            _i++ // -1 to exclude current file
+          ) {
+            if (
+              this.files[_i].name === file.name &&
+              this.files[_i].size === file.size &&
+              this.files[_i].lastModifiedDate.toString() ===
+                file.lastModifiedDate.toString()
+            ) {
+              this.removeFile(file);
+              isDuplicate = true;
+              vm.$emit("vdropzone-duplicate-file", file);
             }
+          }
         }
       }
-      vm.$emit('vdropzone-file-added', file)
-      if (vm.isS3 && vm.wasQueueAutoProcess && ! file.manuallyAdded) {
+      vm.$emit("vdropzone-file-added", file);
+      if (vm.isS3 && vm.wasQueueAutoProcess && !file.manuallyAdded) {
         vm.getSignedAndUploadToS3(file);
       }
-    })
-    this.dropzone.on('addedfiles', function(files) {
-      vm.$emit('vdropzone-files-added', files)
-    })
-    this.dropzone.on('removedfile', function(file) {
-      vm.$emit('vdropzone-removed-file', file)
-      if (file.manuallyAdded && vm.dropzone.options.maxFiles !== null) vm.dropzone.options.maxFiles++
-    })
-    this.dropzone.on('success', function(file, response) {
-      vm.$emit('vdropzone-success', file, response)
+    });
+    this.dropzone.on("addedfiles", function (files) {
+      vm.$emit("vdropzone-files-added", files);
+    });
+    this.dropzone.on("removedfile", function (file) {
+      vm.$emit("vdropzone-removed-file", file);
+      if (file.manuallyAdded && vm.dropzone.options.maxFiles !== null)
+        vm.dropzone.options.maxFiles++;
+    });
+    this.dropzone.on("success", function (file, response) {
+      vm.$emit("vdropzone-success", file, response);
       if (vm.isS3) {
-        if(vm.isS3OverridesServerPropagation){
-          var xmlResponse = (new window.DOMParser()).parseFromString(response, "text/xml");
+        if (vm.isS3OverridesServerPropagation) {
+          var xmlResponse = new window.DOMParser().parseFromString(
+            response,
+            "text/xml"
+          );
           var s3ObjectLocation = xmlResponse.firstChild.children[0].innerHTML;
-          vm.$emit('vdropzone-s3-upload-success', s3ObjectLocation);
+          vm.$emit("vdropzone-s3-upload-success", s3ObjectLocation);
         }
-          if (vm.wasQueueAutoProcess)
-            vm.setOption('autoProcessQueue', false);
+        if (vm.wasQueueAutoProcess) vm.setOption("autoProcessQueue", false);
       }
-    })
-    this.dropzone.on('successmultiple', function(file, response) {
-      vm.$emit('vdropzone-success-multiple', file, response)
-    })
-    this.dropzone.on('error', function(file, message, xhr) {
-      vm.$emit('vdropzone-error', file, message, xhr)
-      if (this.isS3)
-        vm.$emit('vdropzone-s3-upload-error');
-    })
-    this.dropzone.on('errormultiple', function(files, message, xhr) {
-      vm.$emit('vdropzone-error-multiple', files, message, xhr)
-    })
-    this.dropzone.on('sending', function(file, xhr, formData) {
+    });
+    this.dropzone.on("successmultiple", function (file, response) {
+      vm.$emit("vdropzone-success-multiple", file, response);
+    });
+    this.dropzone.on("error", function (file, message, xhr) {
+      vm.$emit("vdropzone-error", file, message, xhr);
+      if (this.isS3) vm.$emit("vdropzone-s3-upload-error");
+    });
+    this.dropzone.on("errormultiple", function (files, message, xhr) {
+      vm.$emit("vdropzone-error-multiple", files, message, xhr);
+    });
+    this.dropzone.on("sending", function (file, xhr, formData) {
       if (vm.isS3) {
         if (vm.isS3OverridesServerPropagation) {
           let signature = file.s3Signature;
@@ -3012,100 +3266,123 @@ export default {
             formData.append(key, signature[key]);
           });
         } else {
-          formData.append('s3ObjectLocation', file.s3ObjectLocation);
+          formData.append("s3ObjectLocation", file.s3ObjectLocation);
         }
       }
-      vm.$emit('vdropzone-sending', file, xhr, formData)
-    })
-    this.dropzone.on('sendingmultiple', function(file, xhr, formData) {
-      vm.$emit('vdropzone-sending-multiple', file, xhr, formData)
-    })
-    this.dropzone.on('complete', function(file) {
-      vm.$emit('vdropzone-complete', file)
-    })
-    this.dropzone.on('completemultiple', function(files) {
-      vm.$emit('vdropzone-complete-multiple', files)
-    })
-    this.dropzone.on('canceled', function(file) {
-      vm.$emit('vdropzone-canceled', file)
-    })
-    this.dropzone.on('canceledmultiple', function(files) {
-      vm.$emit('vdropzone-canceled-multiple', files)
-    })
-    this.dropzone.on('maxfilesreached', function(files) {
-      vm.$emit('vdropzone-max-files-reached', files)
-    })
-    this.dropzone.on('maxfilesexceeded', function(file) {
-      vm.$emit('vdropzone-max-files-exceeded', file)
-    })
-    this.dropzone.on('processing', function(file) {
-      vm.$emit('vdropzone-processing', file)
-    })
-    this.dropzone.on('processingmultiple', function(files) {
-      vm.$emit('vdropzone-processing-multiple', files)
-    })
-    this.dropzone.on('uploadprogress', function(file, progress, bytesSent) {
-      vm.$emit('vdropzone-upload-progress', file, progress, bytesSent)
-    })
-    this.dropzone.on('totaluploadprogress', function(totaluploadprogress, totalBytes, totalBytesSent) {
-      vm.$emit('vdropzone-total-upload-progress', totaluploadprogress, totalBytes, totalBytesSent)
-    })
-    this.dropzone.on('reset', function() {
-      vm.$emit('vdropzone-reset')
-    })
-    this.dropzone.on('queuecomplete', function() {
-      vm.$emit('vdropzone-queue-complete')
-    })
-    this.dropzone.on('drop', function(event) {
-      vm.$emit('vdropzone-drop', event)
-    })
-    this.dropzone.on('dragstart', function(event) {
-      vm.$emit('vdropzone-drag-start', event)
-    })
-    this.dropzone.on('dragend', function(event) {
-      vm.$emit('vdropzone-drag-end', event)
-    })
-    this.dropzone.on('dragenter', function(event) {
-      vm.$emit('vdropzone-drag-enter', event)
-    })
-    this.dropzone.on('dragover', function(event) {
-      vm.$emit('vdropzone-drag-over', event)
-    })
-    this.dropzone.on('dragleave', function(event) {
-      vm.$emit('vdropzone-drag-leave', event)
-    })
-    vm.$emit('vdropzone-mounted')
+      vm.$emit("vdropzone-sending", file, xhr, formData);
+    });
+    this.dropzone.on("sendingmultiple", function (file, xhr, formData) {
+      vm.$emit("vdropzone-sending-multiple", file, xhr, formData);
+    });
+    this.dropzone.on("complete", function (file) {
+      vm.$emit("vdropzone-complete", file);
+    });
+    this.dropzone.on("completemultiple", function (files) {
+      vm.$emit("vdropzone-complete-multiple", files);
+    });
+    this.dropzone.on("canceled", function (file) {
+      vm.$emit("vdropzone-canceled", file);
+    });
+    this.dropzone.on("canceledmultiple", function (files) {
+      vm.$emit("vdropzone-canceled-multiple", files);
+    });
+    this.dropzone.on("maxfilesreached", function (files) {
+      vm.$emit("vdropzone-max-files-reached", files);
+    });
+    this.dropzone.on("maxfilesexceeded", function (file) {
+      vm.$emit("vdropzone-max-files-exceeded", file);
+    });
+    this.dropzone.on("processing", function (file) {
+      vm.$emit("vdropzone-processing", file);
+    });
+    this.dropzone.on("processingmultiple", function (files) {
+      vm.$emit("vdropzone-processing-multiple", files);
+    });
+    this.dropzone.on("uploadprogress", function (file, progress, bytesSent) {
+      vm.$emit("vdropzone-upload-progress", file, progress, bytesSent);
+    });
+    this.dropzone.on(
+      "totaluploadprogress",
+      function (totaluploadprogress, totalBytes, totalBytesSent) {
+        vm.$emit(
+          "vdropzone-total-upload-progress",
+          totaluploadprogress,
+          totalBytes,
+          totalBytesSent
+        );
+      }
+    );
+    this.dropzone.on("reset", function () {
+      vm.$emit("vdropzone-reset");
+    });
+    this.dropzone.on("queuecomplete", function () {
+      vm.$emit("vdropzone-queue-complete");
+    });
+    this.dropzone.on("drop", function (event) {
+      vm.$emit("vdropzone-drop", event);
+    });
+    this.dropzone.on("dragstart", function (event) {
+      vm.$emit("vdropzone-drag-start", event);
+    });
+    this.dropzone.on("dragend", function (event) {
+      vm.$emit("vdropzone-drag-end", event);
+    });
+    this.dropzone.on("dragenter", function (event) {
+      vm.$emit("vdropzone-drag-enter", event);
+    });
+    this.dropzone.on("dragover", function (event) {
+      vm.$emit("vdropzone-drag-over", event);
+    });
+    this.dropzone.on("dragleave", function (event) {
+      vm.$emit("vdropzone-drag-leave", event);
+    });
+    vm.$emit("vdropzone-mounted");
   },
   beforeDestroy() {
-    if (this.destroyDropzone) this.dropzone.destroy()
+    if (this.destroyDropzone) this.dropzone.destroy();
   },
   methods: {
-    manuallyAddFile: function(file, fileUrl) {
-      file.manuallyAdded = true
-      this.dropzone.emit("addedfile", file)
-      let containsImageFileType = false
-      if (fileUrl.indexOf('.svg') > -1 || fileUrl.indexOf('.png') > -1 || fileUrl.indexOf('.jpg') > -1 || fileUrl.indexOf('.jpeg') > -1 || fileUrl.indexOf('.gif') > -1) containsImageFileType = true
-      if (this.dropzone.options.createImageThumbnails && containsImageFileType && file.size <= this.dropzone.options.maxThumbnailFilesize * 1024 * 1024) {
+    manuallyAddFile: function (file, fileUrl) {
+      file.manuallyAdded = true;
+      this.dropzone.emit("addedfile", file);
+      let containsImageFileType = false;
+      if (
+        fileUrl.indexOf(".svg") > -1 ||
+        fileUrl.indexOf(".png") > -1 ||
+        fileUrl.indexOf(".jpg") > -1 ||
+        fileUrl.indexOf(".jpeg") > -1 ||
+        fileUrl.indexOf(".gif") > -1
+      )
+        containsImageFileType = true;
+      if (
+        this.dropzone.options.createImageThumbnails &&
+        containsImageFileType &&
+        file.size <= this.dropzone.options.maxThumbnailFilesize * 1024 * 1024
+      ) {
         fileUrl && this.dropzone.emit("thumbnail", file, fileUrl);
-        var thumbnails = file.previewElement.querySelectorAll('[data-dz-thumbnail]');
+        var thumbnails = file.previewElement.querySelectorAll(
+          "[data-dz-thumbnail]"
+        );
         for (var i = 0; i < thumbnails.length; i++) {
-          thumbnails[i].style.width = this.dropzoneSettings.thumbnailWidth + 'px';
-          thumbnails[i].style.height = this.dropzoneSettings.thumbnailHeight + 'px';
-          thumbnails[i].style['object-fit'] = 'contain';
+          thumbnails[i].style.width =
+            this.dropzoneSettings.thumbnailWidth + "px";
+          thumbnails[i].style.height =
+            this.dropzoneSettings.thumbnailHeight + "px";
+          thumbnails[i].style["object-fit"] = "contain";
         }
       }
-      this.dropzone.emit("complete", file)
-      if (this.dropzone.options.maxFiles) this.dropzone.options.maxFiles--
-      this.dropzone.files.push(file)
-      this.$emit('vdropzone-file-added-manually', file)
+      this.dropzone.emit("complete", file);
+      if (this.dropzone.options.maxFiles) this.dropzone.options.maxFiles--;
+      this.dropzone.files.push(file);
+      this.$emit("vdropzone-file-added-manually", file);
     },
-    setOption: function(option, value) {
-      this.dropzone.options[option] = value
+    setOption: function (option, value) {
+      this.dropzone.options[option] = value;
     },
-    removeAllFiles: function(bool) {
-      this.dropzone.removeAllFiles(bool)
+    removeAllFiles: function (bool) {
+      this.dropzone.removeAllFiles(bool);
     },
-    processQueue: function() {
+    processQueue: function () {
       let dropzoneEle = this.dropzone;
       if (this.isS3 && !this.wasQueueAutoProcess) {
         this.getQueuedFiles().forEach((file) => {
@@ -3114,196 +3391,206 @@ export default {
       } else {
         this.dropzone.processQueue();
       }
-      this.dropzone.on("success", function() {
-        dropzoneEle.options.autoProcessQueue = true
+      this.dropzone.on("success", function () {
+        dropzoneEle.options.autoProcessQueue = true;
       });
-      this.dropzone.on('queuecomplete', function() {
-        dropzoneEle.options.autoProcessQueue = false
-      })
+      this.dropzone.on("queuecomplete", function () {
+        dropzoneEle.options.autoProcessQueue = false;
+      });
     },
-    init: function() {
+    init: function () {
       return this.dropzone.init();
     },
-    destroy: function() {
+    destroy: function () {
       return this.dropzone.destroy();
     },
-    updateTotalUploadProgress: function() {
+    updateTotalUploadProgress: function () {
       return this.dropzone.updateTotalUploadProgress();
     },
-    getFallbackForm: function() {
+    getFallbackForm: function () {
       return this.dropzone.getFallbackForm();
     },
-    getExistingFallback: function() {
+    getExistingFallback: function () {
       return this.dropzone.getExistingFallback();
     },
-    setupEventListeners: function() {
+    setupEventListeners: function () {
       return this.dropzone.setupEventListeners();
     },
-    removeEventListeners: function() {
+    removeEventListeners: function () {
       return this.dropzone.removeEventListeners();
     },
-    disable: function() {
+    disable: function () {
       return this.dropzone.disable();
     },
-    enable: function() {
+    enable: function () {
       return this.dropzone.enable();
     },
-    filesize: function(size) {
+    filesize: function (size) {
       return this.dropzone.filesize(size);
     },
-    accept: function(file, done) {
+    accept: function (file, done) {
       return this.dropzone.accept(file, done);
     },
-    addFile: function(file) {
+    addFile: function (file) {
       return this.dropzone.addFile(file);
     },
-    removeFile: function(file) {
-      this.dropzone.removeFile(file)
+    removeFile: function (file) {
+      this.dropzone.removeFile(file);
     },
-    getAcceptedFiles: function() {
-      return this.dropzone.getAcceptedFiles()
+    getAcceptedFiles: function () {
+      return this.dropzone.getAcceptedFiles();
     },
-    getRejectedFiles: function() {
-      return this.dropzone.getRejectedFiles()
+    getRejectedFiles: function () {
+      return this.dropzone.getRejectedFiles();
     },
-    getFilesWithStatus: function() {
-      return this.dropzone.getFilesWithStatus()
+    getFilesWithStatus: function () {
+      return this.dropzone.getFilesWithStatus();
     },
-    getQueuedFiles: function() {
-      return this.dropzone.getQueuedFiles()
+    getQueuedFiles: function () {
+      return this.dropzone.getQueuedFiles();
     },
-    getUploadingFiles: function() {
-      return this.dropzone.getUploadingFiles()
+    getUploadingFiles: function () {
+      return this.dropzone.getUploadingFiles();
     },
-    getAddedFiles: function() {
-      return this.dropzone.getAddedFiles()
+    getAddedFiles: function () {
+      return this.dropzone.getAddedFiles();
     },
-    getActiveFiles: function() {
-      return this.dropzone.getActiveFiles()
+    getActiveFiles: function () {
+      return this.dropzone.getActiveFiles();
     },
     getSignedAndUploadToS3(file) {
-      var promise = awsEndpoint.sendFile(file, this.awss3, this.isS3OverridesServerPropagation);
-        if (!this.isS3OverridesServerPropagation) {
-          promise.then((response) => {
-            if (response.success) {
-              file.s3ObjectLocation = response.message
-              setTimeout(() => this.dropzone.processFile(file))
-              this.$emit('vdropzone-s3-upload-success', response.message);
+      var promise = awsEndpoint.sendFile(
+        file,
+        this.awss3,
+        this.isS3OverridesServerPropagation
+      );
+      if (!this.isS3OverridesServerPropagation) {
+        promise.then((response) => {
+          if (response.success) {
+            file.s3ObjectLocation = response.message;
+            setTimeout(() => this.dropzone.processFile(file));
+            this.$emit("vdropzone-s3-upload-success", response.message);
+          } else {
+            if ("undefined" !== typeof response.message) {
+              this.$emit("vdropzone-s3-upload-error", response.message);
             } else {
-              if ('undefined' !== typeof response.message) {
-                this.$emit('vdropzone-s3-upload-error', response.message);
-              } else {
-                this.$emit('vdropzone-s3-upload-error', "Network Error : Could not send request to AWS. (Maybe CORS error)");
-              }
+              this.$emit(
+                "vdropzone-s3-upload-error",
+                "Network Error : Could not send request to AWS. (Maybe CORS error)"
+              );
             }
-          });
-        } else {
-          promise.then(() => {
-            setTimeout(() => this.dropzone.processFile(file))
+          }
+        });
+      } else {
+        promise.then(() => {
+          setTimeout(() => this.dropzone.processFile(file));
         });
       }
       promise.catch((error) => {
-        alert(error)
+        alert(error);
       });
     },
     setAWSSigningURL(location) {
       if (this.isS3) {
         this.awss3.signingURL = location;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style>
-  .vue-dropzone {
-    border: 2px solid #E5E5E5;
-    font-family: 'Arial', sans-serif;
-    letter-spacing: 0.2px;
-    color: #777;
-    transition: .2s linear;
-   }
-  .vue-dropzone:hover {
-    background-color: #F6F6F6;
-  }
-  .vue-dropzone > i {
-    color: #CCC;
-  }
-  .vue-dropzone > .dz-preview .dz-image {
-    border-radius: 0;
-    width: 100%;
-    height: 100%;
-  }
-  .vue-dropzone > .dz-preview .dz-image img:not([src]) {
-    width: 200px;
-    height: 200px;
-  }
-  .vue-dropzone > .dz-preview .dz-image:hover img {
-    transform: none;
-    -webkit-filter: none;
-  }
-  .vue-dropzone > .dz-preview .dz-details {
-    bottom: 0;
-    top: 0;
-    color: white;
-    background-color: rgba(33, 150, 243, 0.8);
-    transition: opacity .2s linear;
-    text-align: left;
-  }
-  .vue-dropzone > .dz-preview .dz-details .dz-filename {
-    overflow: hidden;
-  }
-  .vue-dropzone > .dz-preview .dz-details .dz-filename span, .vue-dropzone > .dz-preview .dz-details .dz-size span {
-    background-color: transparent;
-  }
-  .vue-dropzone > .dz-preview .dz-details .dz-filename:not(:hover) span {
-    border: none;
-  }
-  .vue-dropzone > .dz-preview .dz-details .dz-filename:hover span {
-    background-color: transparent;
-    border: none;
-  }
-  .vue-dropzone > .dz-preview .dz-progress .dz-upload {
-    background: #cccccc;
-  }
-  .vue-dropzone > .dz-preview .dz-remove  {
-    position: absolute;
-    z-index: 30;
-    color: white;
-    margin-left: 15px;
-    padding: 10px;
-    top: inherit;
-    bottom: 15px;
-    border: 2px white solid;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    font-weight: 800;
-    letter-spacing: 1.1px;
-    opacity: 0;
-  }
-  .vue-dropzone > .dz-preview:hover .dz-remove {
-    opacity: 1;
-  }
-  .vue-dropzone > .dz-preview .dz-success-mark, .vue-dropzone > .dz-preview .dz-error-mark {
-    margin-left: auto;
-    margin-top: auto;
-    width: 100%;
-    top: 35%;
-    left: 0;
-  }
-  .vue-dropzone > .dz-preview .dz-success-mark svg, .vue-dropzone > .dz-preview .dz-error-mark svg {
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .vue-dropzone > .dz-preview .dz-error-message {
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    width: 100%;
-    text-align: center;
-  }
-  .vue-dropzone > .dz-preview .dz-error-message:after {
-    display: none;
-  }
+.vue-dropzone {
+  border: 2px solid #e5e5e5;
+  font-family: "Arial", sans-serif;
+  letter-spacing: 0.2px;
+  color: #777;
+  transition: 0.2s linear;
+}
+.vue-dropzone:hover {
+  background-color: #f6f6f6;
+}
+.vue-dropzone > i {
+  color: #ccc;
+}
+.vue-dropzone > .dz-preview .dz-image {
+  border-radius: 0;
+  width: 100%;
+  height: 100%;
+}
+.vue-dropzone > .dz-preview .dz-image img:not([src]) {
+  width: 200px;
+  height: 200px;
+}
+.vue-dropzone > .dz-preview .dz-image:hover img {
+  transform: none;
+  -webkit-filter: none;
+}
+.vue-dropzone > .dz-preview .dz-details {
+  bottom: 0;
+  top: 0;
+  color: white;
+  background-color: rgba(33, 150, 243, 0.8);
+  transition: opacity 0.2s linear;
+  text-align: left;
+}
+.vue-dropzone > .dz-preview .dz-details .dz-filename {
+  overflow: hidden;
+}
+.vue-dropzone > .dz-preview .dz-details .dz-filename span,
+.vue-dropzone > .dz-preview .dz-details .dz-size span {
+  background-color: transparent;
+}
+.vue-dropzone > .dz-preview .dz-details .dz-filename:not(:hover) span {
+  border: none;
+}
+.vue-dropzone > .dz-preview .dz-details .dz-filename:hover span {
+  background-color: transparent;
+  border: none;
+}
+.vue-dropzone > .dz-preview .dz-progress .dz-upload {
+  background: #cccccc;
+}
+.vue-dropzone > .dz-preview .dz-remove {
+  position: absolute;
+  z-index: 30;
+  color: white;
+  margin-left: 15px;
+  padding: 10px;
+  top: inherit;
+  bottom: 15px;
+  border: 2px white solid;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+  opacity: 0;
+}
+.vue-dropzone > .dz-preview:hover .dz-remove {
+  opacity: 1;
+}
+.vue-dropzone > .dz-preview .dz-success-mark,
+.vue-dropzone > .dz-preview .dz-error-mark {
+  margin-left: auto;
+  margin-top: auto;
+  width: 100%;
+  top: 35%;
+  left: 0;
+}
+.vue-dropzone > .dz-preview .dz-success-mark svg,
+.vue-dropzone > .dz-preview .dz-error-mark svg {
+  margin-left: auto;
+  margin-right: auto;
+}
+.vue-dropzone > .dz-preview .dz-error-message {
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+.vue-dropzone > .dz-preview .dz-error-message:after {
+  display: none;
+}
 </style>
