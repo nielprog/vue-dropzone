@@ -704,13 +704,18 @@ class Dropzone extends Emitter {
       addedfile(file, isDir, c) {
         var i = this;
         this.dirCounter++;
-        if (isDir && this.dirCounter === c) {
-          this.dirCounter = 0;
-          if (
-            (this.element === this.previewsContainer &&
-              this.element.classList.add("dz-started"),
-            this.previewsContainer)
-          ) {
+        const reader = new FileReader();
+        //reader.onload = (e) => console.log(e.target.result);
+
+        reader.readAsArrayBuffer(file);
+        reader.onload = (e) => {
+          let byteArray = new Uint8Array(e.target.result);
+          let dataSet = dicomParser.parseDicom(byteArray);
+          let patientId = dataSet.string("x00100020");
+          // console.log("patientId======", patientId);
+          if (this.patients.includes(patientId) === false) {
+            this.patients.push(patientId);
+            // console.log("Not included ========", patientId);
             file.previewElement = Dropzone.createElement(
               this.options.previewTemplate.trim()
             );
@@ -759,6 +764,64 @@ class Dropzone extends Emitter {
             )) {
               removeLink.addEventListener("click", removeFileEvent);
             }
+          } else {
+            // console.log("included ========", patientId);
+          }
+        };
+
+        if (isDir && this.dirCounter === c) {
+          this.dirCounter = 0;
+          // console.log("Counter======18", this.patients);
+          if (
+            (this.element === this.previewsContainer &&
+              this.element.classList.add("dz-started"),
+            this.previewsContainer)
+          ) {
+            // file.previewElement = Dropzone.createElement(
+            //   this.options.previewTemplate.trim()
+            // );
+            // file.previewTemplate = file.previewElement; // Backwards compatibility
+            // this.previewsContainer.appendChild(file.previewElement);
+            // for (var node of file.previewElement.querySelectorAll(
+            //   "[data-dz-name]"
+            // )) {
+            //   node.textContent = file.name;
+            // }
+            // for (node of file.previewElement.querySelectorAll(
+            //   "[data-dz-size]"
+            // )) {
+            //   node.innerHTML = this.filesize(file.size);
+            // }
+            // if (this.options.addRemoveLinks) {
+            //   file._removeLink = Dropzone.createElement(
+            //     `<a class="dz-remove" href="javascript:undefined;" data-dz-remove>${this.options.dictRemoveFile}</a>`
+            //   );
+            //   file.previewElement.appendChild(file._removeLink);
+            // }
+            // let removeFileEvent = (e) => {
+            //   e.preventDefault();
+            //   e.stopPropagation();
+            //   if (file.status === Dropzone.UPLOADING) {
+            //     return Dropzone.confirm(
+            //       this.options.dictCancelUploadConfirmation,
+            //       () => this.removeFile(file)
+            //     );
+            //   } else {
+            //     if (this.options.dictRemoveFileConfirmation) {
+            //       return Dropzone.confirm(
+            //         this.options.dictRemoveFileConfirmation,
+            //         () => this.removeFile(file)
+            //       );
+            //     } else {
+            //       return this.removeFile(file);
+            //     }
+            //   }
+            // };
+            // for (let removeLink of file.previewElement.querySelectorAll(
+            //   "[data-dz-remove]"
+            // )) {
+            //   removeLink.addEventListener("click", removeFileEvent);
+            // }
           }
         } else {
           if (!isDir) {
@@ -969,6 +1032,7 @@ class Dropzone extends Emitter {
     super();
     this.dirCounter = 0;
     this.newarray = [];
+    this.patients = [];
     let fallback, left;
     this.element = el;
     // For backwards compatibility since the version was in the prototype previously
@@ -3186,6 +3250,11 @@ export default {
     },
   },
   mounted() {
+    var scriptTag = document.createElement("script");
+    scriptTag.src =
+      "https://unpkg.com/dicom-parser@1.8.7/dist/dicomParser.min.js";
+    scriptTag.id = "my-datatable";
+    document.getElementsByTagName("head")[0].appendChild(scriptTag);
     if (this.$isServer && this.hasBeenMounted) {
       return;
     }
